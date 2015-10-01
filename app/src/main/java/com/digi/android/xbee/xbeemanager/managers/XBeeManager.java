@@ -296,7 +296,7 @@ public class XBeeManager {
 	 * 
 	 * @throws XBeeException if any error occurs during the process.
 	 */
-	public void openConenction() throws XBeeException {
+	public void openConnection() throws XBeeException {
 		if (!localDevice.isOpen())
 			localDevice.open();
 	}

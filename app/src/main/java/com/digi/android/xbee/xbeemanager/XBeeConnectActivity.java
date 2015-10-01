@@ -181,7 +181,7 @@ public class XBeeConnectActivity extends Activity {
 				disableConnectButton();
 				showProgressDialog();
 				try {
-					xbeeManager.openConenction();
+					xbeeManager.openConnection();
 					XBeeConnectActivity.this.startActivity(new Intent(XBeeConnectActivity.this, XBeeTabsActivity.class));
 				} catch (XBeeException e) {
 					setErrorMessage("Error opening connection > " + e.getMessage());
