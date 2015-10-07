@@ -18,6 +18,8 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
+
 public class XBeeConnectActivity extends Activity {
 
 	// Constants.
@@ -31,53 +33,62 @@ public class XBeeConnectActivity extends Activity {
 	// Variables.
 	private RadioButton useUSBHostButton;
 	private RadioButton useSerialButton;
-	
+
 	private Spinner serialPortSpinner;
 	private Spinner baudRateSpinner;
-	
+
 	private Button connectButton;
-	
+
 	private TextView errorText;
 	private TextView serialPortLabel;
-	
-	private String[] serialPorts;
-	
+
 	private ProgressDialog progressDialog;
 	
 	private XBeeManager xbeeManager;
-	
-	private ArrayAdapter<String> serialPortsAdapter;
-	
-	// Handler used to perform actions in the UI thread.
-	private Handler handler = new Handler() {
+
+    private IncomingHandler handler = new IncomingHandler(this);
+
+    // Handler used to perform actions in the UI thread.
+    static class IncomingHandler extends Handler {
+        private final WeakReference<XBeeConnectActivity> wActivity;
+
+        IncomingHandler(XBeeConnectActivity activity) {
+            wActivity = new WeakReference<XBeeConnectActivity>(activity);
+        }
+
+        @Override
 		public void handleMessage(Message msg) {
+
+            XBeeConnectActivity xBeeConnectActivity = wActivity.get();
+            if (xBeeConnectActivity == null) return;
+
 			switch (msg.what) {
 			case ACTION_CLEAR_ERROR_MESSAGE:
-				errorText.setText("");
+				xBeeConnectActivity.errorText.setText("");
 				break;
 			case ACTION_SET_ERROR_MESSAGE:
-				errorText.setText((String)msg.obj);
+				xBeeConnectActivity.errorText.setText((String)msg.obj);
 				break;
 			case ACTION_SHOW_PROGRESS_DIALOG:
-				progressDialog = new ProgressDialog(XBeeConnectActivity.this);
-				progressDialog.setCancelable(false);
-				progressDialog.setTitle(getResources().getString(R.string.connect_dialog_title));
-				progressDialog.setMessage(getResources().getString(R.string.connect_dialog_text));
-				progressDialog.show();
+				xBeeConnectActivity.progressDialog = new ProgressDialog(xBeeConnectActivity);
+                xBeeConnectActivity.progressDialog.setCancelable(false);
+				xBeeConnectActivity.progressDialog.setTitle(xBeeConnectActivity.getResources().getString(R.string.connect_dialog_title));
+				xBeeConnectActivity.progressDialog.setMessage(xBeeConnectActivity.getResources().getString(R.string.connect_dialog_text));
+				xBeeConnectActivity.progressDialog.show();
 				break;
 			case ACTION_HIDE_PROGRESS_DIALOG:
-				if (progressDialog != null)
-					progressDialog.dismiss();
+				if (xBeeConnectActivity.progressDialog != null)
+					xBeeConnectActivity.progressDialog.dismiss();
 				break;
 			case ACTION_ENABLE_CONNECT_BUTTON:
-				connectButton.setEnabled(true);
+				xBeeConnectActivity.connectButton.setEnabled(true);
 				break;
 			case ACTION_DISABLE_CONNECT_BUTTON:
-				connectButton.setEnabled(false);
+				xBeeConnectActivity.connectButton.setEnabled(false);
 				break;
 			}
-		};
-	};
+		}
+	}
 	
 	/*
 	 * (non-Javadoc)
@@ -182,7 +193,7 @@ public class XBeeConnectActivity extends Activity {
 				showProgressDialog();
 				try {
 					xbeeManager.openConnection();
-					XBeeConnectActivity.this.startActivity(new Intent(XBeeConnectActivity.this, XBeeTabsActivity.class));
+					startActivity(new Intent(XBeeConnectActivity.this, XBeeTabsActivity.class));
 				} catch (XBeeException e) {
 					setErrorMessage("Error opening connection > " + e.getMessage());
 				} finally {
@@ -198,6 +209,8 @@ public class XBeeConnectActivity extends Activity {
 	 * Fills the serial port spinner list.
 	 */
 	private void fillSerialPorts() {
+		String[] serialPorts;
+        ArrayAdapter<String> serialPortsAdapter;
 		try {
 			serialPorts = SerialPortRxTxAndroid.listSerialPorts();
 			if (serialPorts == null || serialPorts.length == 0) {

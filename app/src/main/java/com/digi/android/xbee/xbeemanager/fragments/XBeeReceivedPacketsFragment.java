@@ -1,5 +1,6 @@
 package com.digi.android.xbee.xbeemanager.fragments;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import com.digi.android.xbee.xbeemanager.R;
@@ -31,56 +32,67 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment implements IDataReceiveListener, IIOSampleReceiveListener, IModemStatusReceiveListener {
+public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
+		implements IDataReceiveListener, IIOSampleReceiveListener, IModemStatusReceiveListener {
 
 	// Variables.
 	private XBeeManager xbeeManager;
-	
 	private ArrayList<AbstractReceivedPacket> receivedPackets;
-	
 	private ReceivedXBeePacketsAdapter receivedPacketsAdapter;
-	
-	private ListView receivedPacketsList;
-	
-	private Button clearButton;
-	
+
 	private TextView receivedPacketsText;
 	private TextView dateText;
 	private TextView typeText;
 	private TextView sourceAddressText;
 	private TextView packetDataText;
 	
-	private Object receviedPacketsLock = new Object();
-	
-	// Handler used to perform actions in the UI thread.
-	private Handler handler = new Handler() {
+	private final Object receivedPacketsLock = new Object();
+
+    private IncomingHandler handler = new IncomingHandler(this);
+
+    // Handler used to perform actions in the UI thread.
+    static class IncomingHandler extends Handler {
+
+        private final WeakReference<XBeeReceivedPacketsFragment> wActivity;
+
+        IncomingHandler(XBeeReceivedPacketsFragment activity) {
+            wActivity = new WeakReference<XBeeReceivedPacketsFragment>(activity);
+        }
+
+        @Override
 		public void handleMessage(Message msg) {
+
+            XBeeReceivedPacketsFragment xBeeReceivedPacketsFragment = wActivity.get();
+            if (xBeeReceivedPacketsFragment == null) return;
+
 			switch (msg.what) {
 			case ACTION_UPDATE_LIST_VIEW:
-				receivedPacketsAdapter.notifyDataSetChanged();
-				handler.sendEmptyMessage(ACTION_UPDATE_LIST_TEXT);
+				xBeeReceivedPacketsFragment.receivedPacketsAdapter.notifyDataSetChanged();
+				this.sendEmptyMessage(ACTION_UPDATE_LIST_TEXT);
 				break;
 			case ACTION_UPDATE_LIST_TEXT:
-				receivedPacketsText.setText(receivedPackets.size() + " " + getResources().getString(R.string.packets_received));
+				xBeeReceivedPacketsFragment.receivedPacketsText.setText(
+                        xBeeReceivedPacketsFragment.receivedPackets.size() + " " +
+                                xBeeReceivedPacketsFragment.getResources().getString(R.string.packets_received));
 				break;
 			case ACTION_CLEAR_VALUES:
-				dateText.setText("");
-				typeText.setText("");
-				sourceAddressText.setText("");
-				packetDataText.setText("");
+				xBeeReceivedPacketsFragment.dateText.setText("");
+				xBeeReceivedPacketsFragment.typeText.setText("");
+				xBeeReceivedPacketsFragment.sourceAddressText.setText("");
+				xBeeReceivedPacketsFragment.packetDataText.setText("");
 				break;
 			case ACTION_ADD_PACKET_TO_LIST:
-				synchronized (receviedPacketsLock) {
-					receivedPackets.add(0, (AbstractReceivedPacket)msg.obj);
-					updateListView();
-					if (receivedPacketsAdapter.getSelection() != ReceivedXBeePacketsAdapter.NOTHING_SELECTED)
-						receivedPacketsAdapter.setSelection(receivedPacketsAdapter.getSelection() + 1);
-					updateListView();
+				synchronized (xBeeReceivedPacketsFragment.receivedPacketsLock) {
+					xBeeReceivedPacketsFragment.receivedPackets.add(0, (AbstractReceivedPacket)msg.obj);
+					xBeeReceivedPacketsFragment.updateListView();
+					if (xBeeReceivedPacketsFragment.receivedPacketsAdapter.getSelection() != ReceivedXBeePacketsAdapter.NOTHING_SELECTED)
+						xBeeReceivedPacketsFragment.receivedPacketsAdapter.setSelection(xBeeReceivedPacketsFragment.receivedPacketsAdapter.getSelection() + 1);
+					xBeeReceivedPacketsFragment.updateListView();
 				}
 				break;
 			}
-		};
-	};
+		}
+	}
 	
 	/**
 	 * Class constructor. Instantiates a new {@code XBeeReceivedFramesFragment}
@@ -147,7 +159,7 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment impl
 	 */
 	private void initializeUIElements(View view) {
 		// XBee packet List.
-		receivedPacketsList = (ListView)view.findViewById(R.id.received_packets_list);
+        ListView receivedPacketsList = (ListView)view.findViewById(R.id.received_packets_list);
 		receivedPacketsList.setAdapter(receivedPacketsAdapter);
 		receivedPacketsList.setOnItemClickListener(new OnItemClickListener() {
 			/*
@@ -162,7 +174,8 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment impl
 			}
 		});
 		// Buttons.
-		clearButton = (Button)view.findViewById(R.id.clear_button);
+
+        Button clearButton = (Button)view.findViewById(R.id.clear_button);
 		clearButton.setOnClickListener(new OnClickListener() {
 			/*
 			 * (non-Javadoc)
@@ -200,7 +213,7 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment impl
 	 * Handles what happens when the clear button is pressed.
 	 */
 	private void handleClearButtonPressed() {
-		synchronized (receviedPacketsLock) {
+		synchronized (receivedPacketsLock) {
 			receivedPackets.clear();
 		}
 		receivedPacketsAdapter.setSelection(RemoteXBeeDevicesAdapter.NOTHING_SELECTED);

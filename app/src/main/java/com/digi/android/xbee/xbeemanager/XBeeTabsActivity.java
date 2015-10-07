@@ -23,14 +23,7 @@ public class XBeeTabsActivity extends FragmentActivity {
 	
 	// Variables.
 	private ViewPager viewPager;
-	
-	private Tab infoTab;
-	private Tab discoverTab;
-	private Tab framesTab;
-	
-	private XBeeDevicePagerAdapter xbeePagerAdapter;
-
-	private XBeeManager xbeeManager;
+    private XBeeManager xbeeManager;
 	
 	/*
 	 * (non-Javadoc)
@@ -67,7 +60,7 @@ public class XBeeTabsActivity extends FragmentActivity {
 			}
 		});
 		viewPager.setOffscreenPageLimit(2);
-		xbeePagerAdapter = new XBeeDevicePagerAdapter(getSupportFragmentManager());
+		XBeeDevicePagerAdapter xbeePagerAdapter = new XBeeDevicePagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(xbeePagerAdapter);
 	}
 	
@@ -78,16 +71,16 @@ public class XBeeTabsActivity extends FragmentActivity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		XBeeDeviceTabListener xbeeDeviceTabListener = new XBeeDeviceTabListener();
-		
-		infoTab = actionBar.newTab();
+
+		Tab infoTab = actionBar.newTab();
 		infoTab.setText(getResources().getString(R.string.device_info_fragment_title));
 		infoTab.setTabListener(xbeeDeviceTabListener);
-		
-		discoverTab = actionBar.newTab();
+
+		Tab discoverTab;discoverTab = actionBar.newTab();
 		discoverTab.setText(getResources().getString(R.string.device_discovery_fragment_title));
 		discoverTab.setTabListener(xbeeDeviceTabListener);
-		
-		framesTab = actionBar.newTab();
+
+		Tab framesTab = actionBar.newTab();
 		framesTab.setText(getResources().getString(R.string.frames_fragment_title));
 		framesTab.setTabListener(xbeeDeviceTabListener);
 		

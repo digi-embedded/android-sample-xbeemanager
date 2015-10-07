@@ -11,10 +11,8 @@ Demo requirements
 To run this example you need:
 
 * One compatible device to host the application.
-* Network connection between the device and the host PC in order to transfer and
+* A USB connection between the device and the host PC in order to transfer and
   launch the application.
-* Establish remote target connection to your Digi hardware before running this
-  application.
 * An XBee device in API mode and preferably configured to join to a network.
 
 Demo setup
@@ -25,8 +23,7 @@ Make sure the hardware is set up correctly:
 1. The device is powered on.
 2. The XBee device is attached to the SBC board using the XBee socket or using
    the USB interface.
-3. The device is connected directly to the PC or to the Local Area Network (LAN)
-   by the Ethernet cable.
+3. The device is connected directly to the PC by the micro USB cable.
 
 Demo run
 --------
@@ -55,8 +52,7 @@ new tabs are displayed:
 * **Received XBee Data**: Displays a table with received data from other XBee
   devices in the network.
 
-Tested on
----------
-
+Compatible with
+---------------
 * ConnectCore 6 SBC
 * ConnectCore 6 SBC v2

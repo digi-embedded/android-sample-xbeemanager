@@ -72,6 +72,6 @@ public class ReceivedIOSamplePacket extends AbstractReceivedPacket {
 				sb.append(END_LINE);
 			}
 		}
-		return new String(sb.toString());
+		return sb.toString();
 	}
 }

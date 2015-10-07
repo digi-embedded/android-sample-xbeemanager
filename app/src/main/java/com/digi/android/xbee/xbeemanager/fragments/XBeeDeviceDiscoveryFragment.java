@@ -1,5 +1,6 @@
 package com.digi.android.xbee.xbeemanager.fragments;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -60,112 +61,127 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	
 	private ProgressDialog progressDialog;
 	
-	private Object remoteDevicesLock = new Object();
-	
-	// Handler used to perform actions in the UI thread.
-	private Handler handler = new Handler() {
+	private final Object remoteDevicesLock = new Object();
+	private IncomingHandler handler = new IncomingHandler(this);
+
+	static class IncomingHandler extends Handler {
+
+		private final WeakReference<XBeeDeviceDiscoveryFragment> wActivity;
+
+		IncomingHandler(XBeeDeviceDiscoveryFragment activity) {
+			wActivity = new WeakReference<XBeeDeviceDiscoveryFragment>(activity);
+		}
+
+		@Override
 		public void handleMessage(Message msg) {
+
+			XBeeDeviceDiscoveryFragment xBeeDeviceDiscoveryFragment = wActivity.get();
+			if (xBeeDeviceDiscoveryFragment == null) return;
+
 			switch (msg.what) {
-			case ACTION_CLEAR_ERROR_MESSAGE:
-				errorText.setText("");
-				break;
-			case ACTION_SET_ERROR_MESSAGE:
-				errorText.setTextColor(getResources().getColor(R.color.red));
-				errorText.setText((String)msg.obj);
-				break;
-			case ACTION_SET_SUCCESS_MESSAGE:
-				errorText.setTextColor(getResources().getColor(R.color.green));
-				errorText.setText((String)msg.obj);
-				break;
-			case ACTION_SHOW_READ_PROGRESS_DIALOG:
-				progressDialog = new ProgressDialog(XBeeDeviceDiscoveryFragment.this.getActivity());
-				progressDialog.setCancelable(false);
-				progressDialog.setTitle(getResources().getString(R.string.reading_dialog_title));
-				progressDialog.setMessage(getResources().getString(R.string.reading_dialog_text));
-				progressDialog.show();
-				break;
-			case ACTION_SHOW_WRITE_PROGRESS_DIALOG:
-				progressDialog = new ProgressDialog(XBeeDeviceDiscoveryFragment.this.getActivity());
-				progressDialog.setCancelable(false);
-				progressDialog.setTitle(getResources().getString(R.string.writing_dialog_title));
-				progressDialog.setMessage(getResources().getString(R.string.writing_dialog_text));
-				progressDialog.show();
-				break;
-			case ACTION_SHOW_SEND_PROGRESS_DIALOG:
-				progressDialog = new ProgressDialog(XBeeDeviceDiscoveryFragment.this.getActivity());
-				progressDialog.setCancelable(false);
-				progressDialog.setTitle(getResources().getString(R.string.sending_dialog_title));
-				progressDialog.setMessage(getResources().getString(R.string.sending_dialog_text));
-				progressDialog.show();
-				break;
-			case ACTION_SHOW_DISCOVER_PROGRESS_DIALOG:
-				progressDialog = new ProgressDialog(XBeeDeviceDiscoveryFragment.this.getActivity());
-				progressDialog.setCancelable(false);
-				progressDialog.setTitle(getResources().getString(R.string.discovering_dialog_title));
-				progressDialog.setMessage(getResources().getString(R.string.discovering_dialog_text));
-				progressDialog.show();
-				break;
-			case ACTION_HIDE_PROGRESS_DIALOG:
-				if (progressDialog != null)
-					progressDialog.dismiss();
-				break;
-			case ACTION_UPDATE_LIST_VIEW:
-				remoteDevicesAdapter.notifyDataSetChanged();
-				remoteDevicesList.invalidateViews();
-				handler.sendEmptyMessage(ACTION_UPDATE_LIST_TEXT);
-				break;
-			case ACTION_UPDATE_LIST_TEXT:
-				remoteDevicesText.setText(remoteDevices.size() + " " + getResources().getString(R.string.remote_devices_found));
-				break;
-			case ACTION_ENABLE_PARAMETERS_BUTTONS:
-				nodeIdentifierButton.setEnabled(true);
-				readOtherParameterButton.setEnabled(true);
-				changeOtherParameterButton.setEnabled(true);
-				refreshButton.setEnabled(true);
-				sendTextDataButton.setEnabled(true);
-				sendHexDataButton.setEnabled(true);
-				break;
-			case ACTION_DISABLE_PARAMETERS_BUTTONS:
-				nodeIdentifierButton.setEnabled(false);
-				readOtherParameterButton.setEnabled(false);
-				changeOtherParameterButton.setEnabled(false);
-				refreshButton.setEnabled(false);
-				sendTextDataButton.setEnabled(false);
-				sendHexDataButton.setEnabled(false);
-				break;
-			case ACTION_CLEAR_VALUES:
-				nodeIdentifierText.setText("");
-				firmwareVersionText.setText("");
-				hardwareVersionText.setText("");
-				xbeeProtocolText.setText("");
-				macAddressText.setText("");
-				break;
-			case ACTION_ENABLE_DISCOVER_BUTTONS:
-				discoverButton.setEnabled(true);
-				clearButton.setEnabled(true);
-				break;
-			case ACTION_DISABLE_DISCOVER_BUTTONS:
-				discoverButton.setEnabled(false);
-				clearButton.setEnabled(false);
-				break;
-			case ACTION_ADD_DEVICE_TO_LIST:
-				RemoteXBeeDevice remoteDevice = (RemoteXBeeDevice)msg.obj;
-				synchronized (remoteDevicesLock) {
-					boolean found = false;
-					for (RemoteXBeeDevice xbeeDevice:remoteDevices) {
-						if (xbeeDevice.get64BitAddress().equals(remoteDevice.get64BitAddress())) {
-							found = true;
-							break;
+				case ACTION_CLEAR_ERROR_MESSAGE:
+					xBeeDeviceDiscoveryFragment.errorText.setText("");
+					break;
+				case ACTION_SET_ERROR_MESSAGE:
+					xBeeDeviceDiscoveryFragment.errorText.setTextColor(xBeeDeviceDiscoveryFragment.getResources().getColor(R.color.red));
+					xBeeDeviceDiscoveryFragment.errorText.setText((String)msg.obj);
+					break;
+				case ACTION_SET_SUCCESS_MESSAGE:
+					xBeeDeviceDiscoveryFragment.errorText.setTextColor(xBeeDeviceDiscoveryFragment.getResources().getColor(R.color.green));
+					xBeeDeviceDiscoveryFragment.errorText.setText((String)msg.obj);
+					break;
+				case ACTION_SHOW_READ_PROGRESS_DIALOG:
+					xBeeDeviceDiscoveryFragment.progressDialog = new
+							ProgressDialog(xBeeDeviceDiscoveryFragment.getActivity());
+					xBeeDeviceDiscoveryFragment.progressDialog.setCancelable(false);
+					xBeeDeviceDiscoveryFragment.progressDialog.setTitle(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.reading_dialog_title));
+					xBeeDeviceDiscoveryFragment.progressDialog.setMessage(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.reading_dialog_text));
+					xBeeDeviceDiscoveryFragment.progressDialog.show();
+					break;
+				case ACTION_SHOW_WRITE_PROGRESS_DIALOG:
+					xBeeDeviceDiscoveryFragment.progressDialog = new ProgressDialog(xBeeDeviceDiscoveryFragment.getActivity());
+					xBeeDeviceDiscoveryFragment.progressDialog.setCancelable(false);
+					xBeeDeviceDiscoveryFragment.progressDialog.setTitle(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.writing_dialog_title));
+					xBeeDeviceDiscoveryFragment.progressDialog.setMessage(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.writing_dialog_text));
+					xBeeDeviceDiscoveryFragment.progressDialog.show();
+					break;
+				case ACTION_SHOW_SEND_PROGRESS_DIALOG:
+					xBeeDeviceDiscoveryFragment.progressDialog = new ProgressDialog(xBeeDeviceDiscoveryFragment.getActivity());
+					xBeeDeviceDiscoveryFragment.progressDialog.setCancelable(false);
+					xBeeDeviceDiscoveryFragment.progressDialog.setTitle(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.sending_dialog_title));
+					xBeeDeviceDiscoveryFragment.progressDialog.setMessage(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.sending_dialog_text));
+					xBeeDeviceDiscoveryFragment.progressDialog.show();
+					break;
+				case ACTION_SHOW_DISCOVER_PROGRESS_DIALOG:
+					xBeeDeviceDiscoveryFragment.progressDialog = new ProgressDialog(xBeeDeviceDiscoveryFragment.getActivity());
+					xBeeDeviceDiscoveryFragment.progressDialog.setCancelable(false);
+					xBeeDeviceDiscoveryFragment.progressDialog.setTitle(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.discovering_dialog_title));
+					xBeeDeviceDiscoveryFragment.progressDialog.setMessage(xBeeDeviceDiscoveryFragment.getResources().getString(R.string.discovering_dialog_text));
+					xBeeDeviceDiscoveryFragment.progressDialog.show();
+					break;
+				case ACTION_HIDE_PROGRESS_DIALOG:
+					if (xBeeDeviceDiscoveryFragment.progressDialog != null)
+						xBeeDeviceDiscoveryFragment.progressDialog.dismiss();
+					break;
+				case ACTION_UPDATE_LIST_VIEW:
+					xBeeDeviceDiscoveryFragment.remoteDevicesAdapter.notifyDataSetChanged();
+					xBeeDeviceDiscoveryFragment.remoteDevicesList.invalidateViews();
+					this.sendEmptyMessage(ACTION_UPDATE_LIST_TEXT);
+					break;
+				case ACTION_UPDATE_LIST_TEXT:
+					xBeeDeviceDiscoveryFragment.remoteDevicesText.setText(xBeeDeviceDiscoveryFragment.remoteDevices.size() + " " +
+							xBeeDeviceDiscoveryFragment.getResources().getString(R.string.remote_devices_found));
+					break;
+				case ACTION_ENABLE_PARAMETERS_BUTTONS:
+					xBeeDeviceDiscoveryFragment.nodeIdentifierButton.setEnabled(true);
+					xBeeDeviceDiscoveryFragment.readOtherParameterButton.setEnabled(true);
+					xBeeDeviceDiscoveryFragment.changeOtherParameterButton.setEnabled(true);
+					xBeeDeviceDiscoveryFragment.refreshButton.setEnabled(true);
+					xBeeDeviceDiscoveryFragment.sendTextDataButton.setEnabled(true);
+					xBeeDeviceDiscoveryFragment.sendHexDataButton.setEnabled(true);
+					break;
+				case ACTION_DISABLE_PARAMETERS_BUTTONS:
+					xBeeDeviceDiscoveryFragment.nodeIdentifierButton.setEnabled(false);
+					xBeeDeviceDiscoveryFragment.readOtherParameterButton.setEnabled(false);
+					xBeeDeviceDiscoveryFragment.changeOtherParameterButton.setEnabled(false);
+					xBeeDeviceDiscoveryFragment.refreshButton.setEnabled(false);
+					xBeeDeviceDiscoveryFragment.sendTextDataButton.setEnabled(false);
+					xBeeDeviceDiscoveryFragment.sendHexDataButton.setEnabled(false);
+					break;
+				case ACTION_CLEAR_VALUES:
+					xBeeDeviceDiscoveryFragment.nodeIdentifierText.setText("");
+					xBeeDeviceDiscoveryFragment.firmwareVersionText.setText("");
+					xBeeDeviceDiscoveryFragment.hardwareVersionText.setText("");
+					xBeeDeviceDiscoveryFragment.xbeeProtocolText.setText("");
+					xBeeDeviceDiscoveryFragment.macAddressText.setText("");
+					break;
+				case ACTION_ENABLE_DISCOVER_BUTTONS:
+					xBeeDeviceDiscoveryFragment.discoverButton.setEnabled(true);
+					xBeeDeviceDiscoveryFragment.clearButton.setEnabled(true);
+					break;
+				case ACTION_DISABLE_DISCOVER_BUTTONS:
+					xBeeDeviceDiscoveryFragment.discoverButton.setEnabled(false);
+					xBeeDeviceDiscoveryFragment.clearButton.setEnabled(false);
+					break;
+				case ACTION_ADD_DEVICE_TO_LIST:
+					RemoteXBeeDevice remoteDevice = (RemoteXBeeDevice)msg.obj;
+					synchronized (xBeeDeviceDiscoveryFragment.remoteDevicesLock) {
+						boolean found = false;
+						for (RemoteXBeeDevice xbeeDevice:xBeeDeviceDiscoveryFragment.remoteDevices) {
+							if (xbeeDevice.get64BitAddress().equals(remoteDevice.get64BitAddress())) {
+								found = true;
+								break;
+							}
 						}
+						if (!found)
+							xBeeDeviceDiscoveryFragment.remoteDevices.add(remoteDevice);
 					}
-					if (!found)
-						remoteDevices.add(remoteDevice);
-				}
-				updateListView();
-				break;
+					xBeeDeviceDiscoveryFragment.updateListView();
+					break;
 			}
-		};
-	};
+		}
+	}
+
 	
 	/**
 	 * Class constructor. Instantiates a new {@code XBeeDevicediscoveryFragment}
@@ -318,12 +334,14 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 					synchronized (changeParameterDialog) {
 						try {
 							changeParameterDialog.wait();
-						} catch (InterruptedException e) {}
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 					String newValue = changeParameterDialog.getTextValue();
 					if (newValue != null)
 						writeRemoteParameter(parameterFinal, newValue, getSelectedXBeeDevice());
-				};
+				}
 			};
 			waitThread.start();
 		}
@@ -358,16 +376,18 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 					synchronized (sendDataDialog) {
 						try {
 							sendDataDialog.wait();
-						} catch (InterruptedException e) {}
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 					byte[] data = sendDataDialog.getValue();
 					// Sanity checks.
 					if (data != null)
 						sendData(data, getSelectedXBeeDevice());
-				};
+				}
 			};
 			waitThread.start();
-		};
+		}
 	};
 	
 	/**
@@ -383,7 +403,9 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 				while (xbeeManager.isDiscoveryRunning()) {
 					try {
 						Thread.sleep(100);
-					} catch (InterruptedException e) {}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		};
@@ -476,7 +498,9 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 				synchronized (readOtherParamDialog) {
 					try {
 						readOtherParamDialog.wait();
-					} catch (InterruptedException e) {}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 				String parameter = readOtherParamDialog.getParameter();
 				// Sanity checks.
@@ -488,7 +512,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 				}
 				// Perform read action.
 				readRemoteParameter(parameter, getSelectedXBeeDevice());
-			};
+			}
 		};
 		waitThread.start();
 	}
@@ -507,7 +531,9 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 				synchronized (changeOtherParamDialog) {
 					try {
 						changeOtherParamDialog.wait();
-					} catch (InterruptedException e) {}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 				String parameter = changeOtherParamDialog.getParameter();
 				String value = changeOtherParamDialog.getValue();
@@ -524,7 +550,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 				}
 				// Perform write action.
 				writeRemoteParameter(parameter, value, getSelectedXBeeDevice());
-			};
+			}
 		};
 		waitThread.start();
 	}
@@ -648,7 +674,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	 * @return The calculated parameter value based on the given user value.
 	 */
 	private byte[] calculateParameterValue(String parameter, String newValue) {
-		byte[] value = null;
+		byte[] value;
 		try {
 			if (parameter.equals(XBeeConstants.PARAM_NODE_IDENTIFIER))
 				value = newValue.getBytes();
