@@ -72,34 +72,22 @@ public class ReceivedXBeePacketsAdapter extends BaseAdapter {
 		return selectedItem;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.widget.Adapter#getCount()
-	 */
+	@Override
 	public int getCount() {
 		return receivedPackets.size();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.widget.Adapter#getItem(int)
-	 */
+	@Override
 	public Object getItem(int position) {
 		return receivedPackets.get(position);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.widget.Adapter#getItemId(int)
-	 */
+	@Override
 	public long getItemId(int position) {
 		return ByteUtils.byteArrayToLong(receivedPackets.get(position).getSourceAddress().getValue());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
-	 */
+	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		// Inflate the view if required.
 		View view = convertView;

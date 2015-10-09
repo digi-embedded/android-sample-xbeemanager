@@ -43,27 +43,18 @@ public abstract class TextValidator implements TextWatcher {
 	 */
 	public abstract void validate(EditText textView, String text);
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.text.TextWatcher#afterTextChanged(android.text.Editable)
-	 */
+	@Override
 	final public void afterTextChanged(Editable s) {
 		String text = editText.getText().toString();
 		validate(editText, text);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.text.TextWatcher#beforeTextChanged(java.lang.CharSequence, int, int, int)
-	 */
+	@Override
 	final public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		// Do nothing.
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.text.TextWatcher#onTextChanged(java.lang.CharSequence, int, int, int)
-	 */
+	@Override
 	final public void onTextChanged(CharSequence s, int start, int before, int count) {
 		// Do nothing.
 	}

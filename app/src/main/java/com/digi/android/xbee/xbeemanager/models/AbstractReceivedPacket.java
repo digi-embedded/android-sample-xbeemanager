@@ -44,12 +44,10 @@ public abstract class AbstractReceivedPacket {
 	public String getTimeString() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(receivedDate);
-		StringBuffer timeString = new StringBuffer();
-		timeString.append(completeNumber(cal.get(Calendar.HOUR_OF_DAY))).append(':');
-		timeString.append(completeNumber(cal.get(Calendar.MINUTE))).append(':');
-		timeString.append(completeNumber(cal.get(Calendar.SECOND))).append('.');
-		timeString.append(completeMilliseconds(cal.get(Calendar.MILLISECOND)));
-		return timeString.toString();
+		return completeNumber(cal.get(Calendar.HOUR_OF_DAY)) + ':'
+				+ completeNumber(cal.get(Calendar.MINUTE)) + ':'
+				+ completeNumber(cal.get(Calendar.SECOND)) + '.'
+				+ completeMilliseconds(cal.get(Calendar.MILLISECOND));
 	}
 	
 	/**
@@ -60,17 +58,17 @@ public abstract class AbstractReceivedPacket {
 	public String getDateAndTimeString() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(receivedDate);
-		StringBuffer dateString = new StringBuffer();
-		StringBuffer timeString = new StringBuffer();
-		dateString.append(cal.get(Calendar.YEAR)).append('-');
-		dateString.append(cal.get(Calendar.MONTH) + 1).append('-');
-		dateString.append(cal.get(Calendar.DAY_OF_MONTH));
-		dateString.append(" ");
-		timeString.append(completeNumber(cal.get(Calendar.HOUR_OF_DAY))).append(':');
-		timeString.append(completeNumber(cal.get(Calendar.MINUTE))).append(':');
-		timeString.append(completeNumber(cal.get(Calendar.SECOND))).append('.');
-		timeString.append(completeMilliseconds(cal.get(Calendar.MILLISECOND)));
-		return dateString.toString() + timeString.toString();
+
+		String dateString = String.valueOf(cal.get(Calendar.YEAR)) + '-'
+				+ (cal.get(Calendar.MONTH) + 1) + '-'
+				+ cal.get(Calendar.DAY_OF_MONTH) + " ";
+
+		String timeString = completeNumber(cal.get(Calendar.HOUR_OF_DAY)) + ':'
+				+ completeNumber(cal.get(Calendar.MINUTE)) + ':'
+				+ completeNumber(cal.get(Calendar.SECOND)) + '.'
+				+ completeMilliseconds(cal.get(Calendar.MILLISECOND));
+
+		return dateString + timeString;
 	}
 	
 	/**

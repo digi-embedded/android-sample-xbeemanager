@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
     android:orientation="horizontal"
@@ -26,17 +27,19 @@
                 android:layout_margin="80dp"
                 android:layout_weight="40"
                 android:scaleType="fitCenter"
-                android:src="@drawable/xbee_module_flat" />
+                android:src="@drawable/xbee_module_flat"
+                android:contentDescription="@string/xbee_device"/>
             <ImageView
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/dark_gray" />
+                android:background="@color/dark_gray"
+                tools:ignore="ContentDescription"/>
             <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30sp"
+                android:layout_marginStart="30sp"
                 android:layout_marginTop="10sp"
                 android:layout_weight="58" >
                 <TextView
@@ -60,7 +63,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/connect_description"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/select_serial_port"
                     android:textColor="@color/dark_gray"
@@ -70,7 +73,7 @@
                     android:layout_width="700dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/serial_port_title"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/light_gray"
                     android:padding="10dp" >
@@ -93,7 +96,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginStart="50dp"
                         android:layout_marginTop="5dp" >
                         <TextView
                             android:id="@+id/serial_port_label"
@@ -107,7 +110,7 @@
                             android:id="@+id/serial_port_spinner"
                             android:layout_width="300dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dip"
+                            android:layout_marginStart="10dip"
                             android:enabled="false"
                             android:textSize="30sp" />
                     </LinearLayout>
@@ -117,7 +120,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/serial_port_group"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/select_baud_rate"
                     android:textColor="@color/dark_gray"
@@ -126,7 +129,7 @@
                     android:layout_width="700dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/baud_rate_title"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/light_gray"
                     android:padding="10dp" >
@@ -134,7 +137,7 @@
                         android:id="@+id/baud_rate_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginStart="50dp"
                         android:text="@string/baud_rate"
                         android:textColor="@color/dark_gray"
                         android:textSize="30sp" />
@@ -142,7 +145,7 @@
                         android:id="@+id/baud_rate_spinner"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
+                        android:layout_marginStart="10dip"
                         android:textSize="30sp" />
                 </LinearLayout>
                 <TextView
@@ -150,8 +153,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@+id/connect_button"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/connect_button"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
@@ -163,9 +166,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/button"
                     android:paddingBottom="7dp"
                     android:paddingLeft="20dp"

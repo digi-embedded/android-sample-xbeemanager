@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp">
@@ -22,7 +23,7 @@
             <RelativeLayout 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp">
+                android:layout_marginEnd="25dp">
                 <ImageView
                     android:id="@+id/xbee_image"
                     android:layout_width="300dp"
@@ -30,14 +31,15 @@
                     android:layout_alignBottom="@+id/blank_space_1"
                     android:padding="30dp"
                     android:layout_margin="0dp"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/xbee_module_flat" />
+                    android:src="@drawable/xbee_module_flat"
+                    android:contentDescription="@string/xbee_device"/>
                 <TextView
                     android:id="@+id/connection_parameters"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/xbee_image"
+                    android:layout_toEndOf="@+id/xbee_image"
                     android:layout_alignParentTop="true"
                     android:text="@string/connection_information"
                     android:textColor="@color/dark_gray"
@@ -46,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/connection_parameters"
-                    android:layout_toRightOf="@id/xbee_image"
+                    android:layout_toEndOf="@id/xbee_image"
                     android:layout_alignTop="@+id/port_label"
                     android:layout_alignBottom="@+id/blank_space_1"
                     android:background="@color/light_gray"/>
@@ -55,9 +57,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/connection_parameters"
-                    android:layout_toRightOf="@id/xbee_image"
+                    android:layout_toEndOf="@id/xbee_image"
                     android:paddingTop="15dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:text="@string/serial_port"
                     android:textColor="@color/dark_gray"
                     android:textSize="35sp" />
@@ -67,8 +69,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/connection_parameters"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/Black"
                     android:textSize="35sp" />
                 <TextView
@@ -76,9 +78,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/port_label"
-                    android:layout_toRightOf="@id/xbee_image"
+                    android:layout_toEndOf="@id/xbee_image"
                     android:layout_marginTop="15dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:text="@string/baud_rate"
                     android:textColor="@color/dark_gray"
                     android:textSize="35sp" />
@@ -88,18 +90,18 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/port_label"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/Black"
                     android:textSize="35sp" />
                 <Button
                     android:id="@+id/disconnect_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/baud_rate_text"
                     android:layout_marginTop="50dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:paddingBottom="7dp"
                     android:background="@drawable/button_red"
                     android:paddingLeft="20dp"
@@ -134,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/basic_parameters"
                     android:paddingTop="15dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:text="@string/firmware_version"
                     android:textColor="@color/dark_gray"
                     android:textSize="35sp" />
@@ -144,8 +146,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/basic_parameters"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/Black"
                     android:textSize="35sp" />
                 <TextView
@@ -154,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/firmware_label"
                     android:layout_marginTop="15dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:text="@string/hardware_version"
                     android:textColor="@color/dark_gray"
                     android:textSize="35sp" />
@@ -164,8 +166,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/firmware_label"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/Black"
                     android:textSize="35sp" />
                 <TextView
@@ -174,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/hardware_label"
                     android:layout_marginTop="15dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:text="@string/xbee_protocol"
                     android:textColor="@color/dark_gray"
                     android:textSize="35sp" />
@@ -184,8 +186,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/hardware_label"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/Black"
                     android:textSize="35sp" />
                 <TextView
@@ -194,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/protocol_label"
                     android:layout_marginTop="15dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:paddingBottom="15dp"
                     android:text="@string/mac_address"
                     android:textColor="@color/dark_gray"
@@ -205,9 +207,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/protocol_label"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:paddingBottom="15dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/Black"
                     android:textSize="35sp" />
             </RelativeLayout>
@@ -217,11 +219,12 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:background="@color/dark_gray" />
+            android:background="@color/dark_gray"
+            tools:ignore="ContentDescription"/>
         <RelativeLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:layout_weight="50" >
             <TextView
                 android:id="@+id/parameters_title"
@@ -243,7 +246,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/parameters_title"
                 android:paddingTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/node_identifier"
                 android:textColor="@color/dark_gray"
                 android:textSize="35sp" />
@@ -252,9 +255,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/parameters_title"
-                android:layout_toLeftOf="@+id/node_identifier_button"
+                android:layout_toStartOf="@+id/node_identifier_button"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/Black"
                 android:textSize="35sp" />
             <Button
@@ -262,8 +265,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/parameters_title"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="5dp"
@@ -278,7 +281,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/node_identifier_label"
                 android:paddingTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/pan_id"
                 android:textColor="@color/dark_gray"
                 android:textSize="35sp" />
@@ -287,9 +290,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/node_identifier_label"
-                android:layout_toLeftOf="@+id/pan_id_button"
+                android:layout_toStartOf="@+id/pan_id_button"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/Black"
                 android:textSize="35sp" />
             <Button
@@ -297,8 +300,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/node_identifier_label"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="5dp"
@@ -313,7 +316,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pan_id_label"
                 android:paddingTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/destination_address_high"
                 android:textColor="@color/dark_gray"
                 android:textSize="35sp" />
@@ -322,9 +325,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pan_id_label"
-                android:layout_toLeftOf="@+id/dest_address_high_button"
+                android:layout_toStartOf="@+id/dest_address_high_button"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/Black"
                 android:textSize="35sp" />
             <Button
@@ -332,8 +335,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pan_id_label"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="5dp"
@@ -348,7 +351,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dest_address_high_text"
                 android:paddingTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/destination_address_low"
                 android:textColor="@color/dark_gray"
                 android:textSize="35sp" />
@@ -357,9 +360,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dest_address_high_text"
-                android:layout_toLeftOf="@+id/dest_address_low_button"
+                android:layout_toStartOf="@+id/dest_address_low_button"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/Black"
                 android:textSize="35sp" />
             <Button
@@ -367,8 +370,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dest_address_high_text"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="5dp"
@@ -383,7 +386,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dest_address_low_text"
                 android:paddingTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/node_discovery_time"
                 android:textColor="@color/dark_gray"
                 android:textSize="35sp" />
@@ -392,9 +395,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dest_address_low_text"
-                android:layout_toLeftOf="@+id/node_discovery_time_button"
+                android:layout_toStartOf="@+id/node_discovery_time_button"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/Black"
                 android:textSize="35sp" />
             <Button
@@ -402,8 +405,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dest_address_low_text"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="5dp"
@@ -418,7 +421,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/node_discovery_time_label"
                 android:paddingTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/io_sampling_rate"
                 android:textColor="@color/dark_gray"
                 android:textSize="35sp" />
@@ -427,9 +430,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/node_discovery_time_label"
-                android:layout_toLeftOf="@+id/io_sampling_rate_button"
+                android:layout_toStartOf="@+id/io_sampling_rate_button"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/Black"
                 android:textSize="35sp" />
             <Button
@@ -437,8 +440,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/node_discovery_time_label"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/button"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="5dp"
@@ -470,8 +473,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/blank_space_2"
-                android:layout_toRightOf="@id/read_other_param_button"
-                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@id/read_other_param_button"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/button"
                 android:layout_marginTop="20dp"
                 android:paddingBottom="5dp"
@@ -485,10 +488,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/refresh_button"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/refresh_button"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="0dp"
                 android:textColor="@color/red"
                 android:textSize="28sp"
@@ -498,9 +501,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginBottom="0dp"
-                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 android:background="@drawable/button"
                 android:paddingBottom="7dp"
                 android:paddingLeft="20dp"

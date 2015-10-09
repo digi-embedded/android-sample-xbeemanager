@@ -14,6 +14,8 @@ package com.digi.android.xbee.xbeemanager.fragments;
 
 import android.support.v4.app.Fragment;
 
+import com.digi.android.xbee.xbeemanager.managers.XBeeManager;
+
 public abstract class AbstractXBeeDeviceFragment extends Fragment {
 	
 	// Constants.
@@ -34,7 +36,10 @@ public abstract class AbstractXBeeDeviceFragment extends Fragment {
 	protected static final int ACTION_DISABLE_DISCOVER_BUTTONS = 14;
 	protected static final int ACTION_ADD_PACKET_TO_LIST = 15;
 	protected static final int ACTION_ADD_DEVICE_TO_LIST = 16;
-	
+
+	// Variables.
+	protected XBeeManager xbeeManager;
+
 	/**
 	 * Retrieves the fragment name.
 	 * 
@@ -42,4 +47,12 @@ public abstract class AbstractXBeeDeviceFragment extends Fragment {
 	 */
 	public abstract String getFragmentName();
 
+	/**
+	 * Configures the XBee Device manager.
+	 *
+	 * @param manager XBee Device manager to interact with XBee devices.
+	 */
+	public void setXBeeManager(XBeeManager manager) {
+		xbeeManager = manager;
+	}
 }

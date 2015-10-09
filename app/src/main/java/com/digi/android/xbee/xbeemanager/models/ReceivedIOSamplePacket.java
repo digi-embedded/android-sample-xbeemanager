@@ -30,35 +30,29 @@ public class ReceivedIOSamplePacket extends AbstractReceivedPacket {
 		this.ioSample = ioSample;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket#getShortPacketData()
-	 */
+	@Override
 	public String getShortPacketData() {
 		StringBuilder sb = new StringBuilder();
 		if (ioSample.hasAnalogValues())
-			sb.append(ioSample.getAnalogValues().size() + ANALOG_VALUES_SHORT);
-		else 
-			sb.append("0" + ANALOG_VALUES_SHORT);
+			sb.append(ioSample.getAnalogValues().size()).append(ANALOG_VALUES_SHORT);
+		else
+			sb.append("0").append(ANALOG_VALUES_SHORT);
 		if (ioSample.hasDigitalValues())
-			sb.append(ioSample.getDigitalValues().size() + DIGITAL_VALUES_SHORT);
+			sb.append(ioSample.getDigitalValues().size()).append(DIGITAL_VALUES_SHORT);
 		else 
-			sb.append("0" + DIGITAL_VALUES_SHORT);
+			sb.append("0").append(DIGITAL_VALUES_SHORT);
 		return sb.toString();
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket#getPacketData()
-	 */
+	@Override
 	public String getPacketData() {
 		StringBuilder sb = new StringBuilder();
 		if (ioSample.hasAnalogValues()) {
 			sb.append(ANALOG_VALUES);
 			for (IOLine ioLine:ioSample.getAnalogValues().keySet()) {
 				sb.append(BULLET);
-				sb.append(ioLine.name() + VALUE_SEPARATOR);
-				sb.append("" + ioSample.getAnalogValues().get(ioLine));
+				sb.append(ioLine.name()).append(VALUE_SEPARATOR);
+				sb.append(ioSample.getAnalogValues().get(ioLine));
 				sb.append(END_LINE);
 			}
 			sb.append(END_LINE);
@@ -67,7 +61,7 @@ public class ReceivedIOSamplePacket extends AbstractReceivedPacket {
 			sb.append(DIGITAL_VALUES);
 			for (IOLine ioLine:ioSample.getDigitalValues().keySet()) {
 				sb.append(BULLET);
-				sb.append(ioLine.name() + VALUE_SEPARATOR);
+				sb.append(ioLine.name()).append(VALUE_SEPARATOR);
 				sb.append(ioSample.getDigitalValues().get(ioLine).getName());
 				sb.append(END_LINE);
 			}

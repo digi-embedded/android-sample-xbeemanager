@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/edit_dialog_param_text"
+        android:labelFor="@+id/param_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <EditText
         android:id="@+id/param_text"
@@ -24,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/edit_dialog_text"
+        android:labelFor="@+id/value_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <EditText
         android:id="@+id/value_text"

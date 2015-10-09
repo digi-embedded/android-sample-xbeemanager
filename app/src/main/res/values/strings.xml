@@ -18,6 +18,7 @@
     <string name="clear">Clear</string>
     <string name="send_text_data">Send Text Data&#8230;</string>
     <string name="send_hex_data">Send Hex Data&#8230;</string>
+    <string name="remove">Remove</string>
     <!-- Parameters -->
     <string name="serial_port">Serial Port: </string>
     <string name="baud_rate">Baud Rate: </string>
@@ -106,4 +107,9 @@
     <string name="remote_devices_found"> remote devices found</string>
     <string name="packets_received"> XBee packets received</string>
     <string name="packet_suffix"> Packet</string>
+    <string name="xbee_device">XBee device</string>
+    <!-- Temp strings -->
+    <string name="initial_mac">0013A20040123456</string>
+    <string name="initial_ni">ZB-3-ARTICUNO</string>
+    <string name="initial_16addr">1234</string>
 </resources>

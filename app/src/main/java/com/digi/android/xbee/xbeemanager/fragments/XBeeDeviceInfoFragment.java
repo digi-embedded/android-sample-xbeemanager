@@ -21,8 +21,6 @@ import com.digi.android.xbee.xbeemanager.XBeeTabsActivity;
 import com.digi.android.xbee.xbeemanager.dialogs.ChangeOtherParameterDialog;
 import com.digi.android.xbee.xbeemanager.dialogs.ChangeParameterDialog;
 import com.digi.android.xbee.xbeemanager.dialogs.ReadOtherParameterDialog;
-import com.digi.android.xbee.xbeemanager.managers.XBeeManager;
-import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.utils.ByteUtils;
 import com.digi.xbee.api.utils.HexUtils;
@@ -41,8 +39,6 @@ import android.widget.TextView;
 public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	
 	// Variables.
-	private XBeeManager xbeeManager;
-	
 	private XBeeTabsActivity xbeeTabsActivity;
 
 	private Button refreshButton;
@@ -77,67 +73,52 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
         @Override
         public void handleMessage(Message msg) {
 
-            XBeeDeviceInfoFragment xBeeDeviceInfoFragment = wActivity.get();
-            if (xBeeDeviceInfoFragment == null) return;
+            XBeeDeviceInfoFragment devInfoFragment = wActivity.get();
+            if (devInfoFragment == null)
+				return;
 
 			switch (msg.what) {
-			case ACTION_CLEAR_ERROR_MESSAGE:
-				xBeeDeviceInfoFragment.errorText.setText("");
-				break;
-			case ACTION_SET_ERROR_MESSAGE:
-				xBeeDeviceInfoFragment.errorText.setTextColor(xBeeDeviceInfoFragment.getResources().getColor(R.color.red));
-				xBeeDeviceInfoFragment.errorText.setText((String)msg.obj);
-				break;
-			case ACTION_SET_SUCCESS_MESSAGE:
-				xBeeDeviceInfoFragment.errorText.setTextColor(xBeeDeviceInfoFragment.getResources().getColor(R.color.green));
-				xBeeDeviceInfoFragment.errorText.setText((String)msg.obj);
-				break;
-			case ACTION_SHOW_READ_PROGRESS_DIALOG:
-				xBeeDeviceInfoFragment.progressDialog = new ProgressDialog(xBeeDeviceInfoFragment.getActivity());
-				xBeeDeviceInfoFragment.progressDialog.setCancelable(false);
-				xBeeDeviceInfoFragment.progressDialog.setTitle(xBeeDeviceInfoFragment.getResources().getString(R.string.reading_dialog_title));
-				xBeeDeviceInfoFragment.progressDialog.setMessage(xBeeDeviceInfoFragment.getResources().getString(R.string.reading_dialog_text));
-				xBeeDeviceInfoFragment.progressDialog.show();
-				break;
-			case ACTION_SHOW_WRITE_PROGRESS_DIALOG:
-				xBeeDeviceInfoFragment.progressDialog = new ProgressDialog(xBeeDeviceInfoFragment.getActivity());
-				xBeeDeviceInfoFragment.progressDialog.setCancelable(false);
-				xBeeDeviceInfoFragment.progressDialog.setTitle(xBeeDeviceInfoFragment.getResources().getString(R.string.writing_dialog_title));
-				xBeeDeviceInfoFragment.progressDialog.setMessage(xBeeDeviceInfoFragment.getResources().getString(R.string.writing_dialog_text));
-				xBeeDeviceInfoFragment.progressDialog.show();
-				break;
-			case ACTION_HIDE_PROGRESS_DIALOG:
-				if (xBeeDeviceInfoFragment.progressDialog != null)
-					xBeeDeviceInfoFragment.progressDialog.dismiss();
-				break;
+				case ACTION_CLEAR_ERROR_MESSAGE:
+					devInfoFragment.errorText.setText("");
+					break;
+				case ACTION_SET_ERROR_MESSAGE:
+					devInfoFragment.errorText.setTextColor(devInfoFragment.getResources().getColor(R.color.red));
+					devInfoFragment.errorText.setText((String)msg.obj);
+					break;
+				case ACTION_SET_SUCCESS_MESSAGE:
+					devInfoFragment.errorText.setTextColor(devInfoFragment.getResources().getColor(R.color.green));
+					devInfoFragment.errorText.setText((String)msg.obj);
+					break;
+				case ACTION_SHOW_READ_PROGRESS_DIALOG:
+					devInfoFragment.progressDialog = new ProgressDialog(devInfoFragment.getActivity());
+					devInfoFragment.progressDialog.setCancelable(false);
+					devInfoFragment.progressDialog.setTitle(devInfoFragment.getResources().getString(R.string.reading_dialog_title));
+					devInfoFragment.progressDialog.setMessage(devInfoFragment.getResources().getString(R.string.reading_dialog_text));
+					devInfoFragment.progressDialog.show();
+					break;
+				case ACTION_SHOW_WRITE_PROGRESS_DIALOG:
+					devInfoFragment.progressDialog = new ProgressDialog(devInfoFragment.getActivity());
+					devInfoFragment.progressDialog.setCancelable(false);
+					devInfoFragment.progressDialog.setTitle(devInfoFragment.getResources().getString(R.string.writing_dialog_title));
+					devInfoFragment.progressDialog.setMessage(devInfoFragment.getResources().getString(R.string.writing_dialog_text));
+					devInfoFragment.progressDialog.show();
+					break;
+				case ACTION_HIDE_PROGRESS_DIALOG:
+					if (devInfoFragment.progressDialog != null)
+						devInfoFragment.progressDialog.dismiss();
+					break;
+				default:
+					break;
 			}
 		}
 	}
 	
-	/**
-	 * Class constructor. Instantiates a new {@code XBeeDeviceInfoFragment}
-	 * object with the given parameters.
-	 * 
-	 * @param xbeeManager XBee Device manager to interact with XBee devices.
-	 * @param xbeeTabsActivity XBee tabs activity that holds this fragment.
-	 */
-	public XBeeDeviceInfoFragment(XBeeManager xbeeManager, XBeeTabsActivity xbeeTabsActivity) {
-		this.xbeeManager = xbeeManager;
-		this.xbeeTabsActivity = xbeeTabsActivity;
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
-	 */
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-	 */
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
 		// Inflate the layout for this fragment
@@ -151,7 +132,21 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		
 		return view;
 	}
-	
+
+	@Override
+	public String getFragmentName() {
+		return getResources().getString(R.string.device_info_fragment_title);
+	}
+
+	/**
+	 * Sets the XBee tabs activity that holds this fragment.
+	 *
+	 * @param activity XBee tabs activity that holds this fragment.
+	 */
+	public void setXBeeTabsActivity(XBeeTabsActivity activity) {
+		xbeeTabsActivity = activity;
+	}
+
 	/**
 	 * Initializes all the required graphic elements of this fragment and sets
 	 * the corresponding listeners. 
@@ -162,44 +157,36 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		// Buttons.
 		Button disconnectButton = (Button)view.findViewById(R.id.disconnect_button);
 		disconnectButton.setOnClickListener(new OnClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.View.OnClickListener#onClick(android.view.View)
-			 */
+			@Override
 			public void onClick(View v) {
 				handleDisconnectButtonPressed();
 			}
 		});
+
 		refreshButton = (Button)view.findViewById(R.id.refresh_button);
 		refreshButton.setOnClickListener(new OnClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.View.OnClickListener#onClick(android.view.View)
-			 */
+			@Override
 			public void onClick(View v) {
 				handleRefreshButtonPressed();
 			}
 		});
+
 		Button readOtherParameterButton = (Button)view.findViewById(R.id.read_other_param_button);
 		readOtherParameterButton.setOnClickListener(new OnClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.View.OnClickListener#onClick(android.view.View)
-			 */
+			@Override
 			public void onClick(View v) {
 				handleReadOtherParameterButtonPressed();
 			}
 		});
+
 		Button changeOtherParameterButton = (Button)view.findViewById(R.id.change_other_param_button);
 		changeOtherParameterButton.setOnClickListener(new OnClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.View.OnClickListener#onClick(android.view.View)
-			 */
+			@Override
 			public void onClick(View v) {
 				handleChangeOtherParameterButtonPressed();
 			}
 		});
+
 		// Change parameters buttons.
 		Button nodeIdentifierButton = (Button)view.findViewById(R.id.node_identifier_button);
 		nodeIdentifierButton.setOnClickListener(parametersChangeButtonListener);
@@ -213,6 +200,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		nodeDiscoveryTimeButton.setOnClickListener(parametersChangeButtonListener);
 		Button ioSamplingRateTimeTimeButton = (Button)view.findViewById(R.id.io_sampling_rate_button);
 		ioSamplingRateTimeTimeButton.setOnClickListener(parametersChangeButtonListener);
+
 		// Texts.
 		errorText = (TextView)view.findViewById(R.id.error_text);
 		serialPortText = (TextView)view.findViewById(R.id.port_text);
@@ -233,10 +221,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	 * Listener used to wait for clicks on the "Change..." parameter buttons.
 	 */
 	private OnClickListener parametersChangeButtonListener = new OnClickListener() {
-		/*
-		 * (non-Javadoc)
-		 * @see android.view.View.OnClickListener#onClick(android.view.View)
-		 */
+		@Override
 		public void onClick(View v) {
 			// Remove error message.
 			clearErrorMessage();
@@ -244,43 +229,48 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			String oldValue = null;
 			String parameter = null;
 			int type = 0;
+
 			switch (v.getId()) {
-			case R.id.node_identifier_button:
-				parameter = XBeeConstants.PARAM_NODE_IDENTIFIER;
-				oldValue = nodeIdentifierText.getText().toString();
-				type = ChangeParameterDialog.TYPE_TEXT;
-				break;
-			case R.id.pan_id_button:
-				parameter = XBeeConstants.PARAM_PAN_ID;
-				oldValue = panIDText.getText().toString();
-				type = ChangeParameterDialog.TYPE_HEXADECIMAL;
-				break;
-			case R.id.dest_address_high_button:
-				parameter = XBeeConstants.PARAM_DEST_ADDRESS_H;
-				oldValue = destAddressHighText.getText().toString();
-				type = ChangeParameterDialog.TYPE_HEXADECIMAL;
-				break;
-			case R.id.dest_address_low_button:
-				parameter = XBeeConstants.PARAM_DEST_ADDRESS_L;
-				oldValue = destAddressLowText.getText().toString();
-				type = ChangeParameterDialog.TYPE_HEXADECIMAL;
-				break;
-			case R.id.node_discovery_time_button:
-				parameter = XBeeConstants.PARAM_NODE_DISCOVERY_TIME;
-				oldValue = nodeDiscoveryTimeText.getText().toString();
-				type = ChangeParameterDialog.TYPE_NUMERIC;
-				break;
-			case R.id.io_sampling_rate_button:
-				parameter = XBeeConstants.PARAM_IO_SAMPLING_RATE;
-				oldValue = ioSamplingRateTimeText.getText().toString();
-				type = ChangeParameterDialog.TYPE_NUMERIC;
-				break;
+				case R.id.node_identifier_button:
+					parameter = XBeeConstants.PARAM_NODE_IDENTIFIER;
+					oldValue = nodeIdentifierText.getText().toString();
+					type = ChangeParameterDialog.TYPE_TEXT;
+					break;
+				case R.id.pan_id_button:
+					parameter = XBeeConstants.PARAM_PAN_ID;
+					oldValue = panIDText.getText().toString();
+					type = ChangeParameterDialog.TYPE_HEXADECIMAL;
+					break;
+				case R.id.dest_address_high_button:
+					parameter = XBeeConstants.PARAM_DEST_ADDRESS_H;
+					oldValue = destAddressHighText.getText().toString();
+					type = ChangeParameterDialog.TYPE_HEXADECIMAL;
+					break;
+				case R.id.dest_address_low_button:
+					parameter = XBeeConstants.PARAM_DEST_ADDRESS_L;
+					oldValue = destAddressLowText.getText().toString();
+					type = ChangeParameterDialog.TYPE_HEXADECIMAL;
+					break;
+				case R.id.node_discovery_time_button:
+					parameter = XBeeConstants.PARAM_NODE_DISCOVERY_TIME;
+					oldValue = nodeDiscoveryTimeText.getText().toString();
+					type = ChangeParameterDialog.TYPE_NUMERIC;
+					break;
+				case R.id.io_sampling_rate_button:
+					parameter = XBeeConstants.PARAM_IO_SAMPLING_RATE;
+					oldValue = ioSamplingRateTimeText.getText().toString();
+					type = ChangeParameterDialog.TYPE_NUMERIC;
+					break;
+				default:
+					break;
 			}
+
 			final String parameterFinal = parameter;
 			final ChangeParameterDialog changeParameterDialog = new ChangeParameterDialog(XBeeDeviceInfoFragment.this.getActivity(), type, oldValue);
 			changeParameterDialog.show();
 			// This thread waits until dialog is closed, dialog is notified itself when that happens.
 			Thread waitThread = new Thread() {
+				@Override
 				public void run() {
 					synchronized (changeParameterDialog) {
 						try {
@@ -304,30 +294,24 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	private void readDeviceParameters() {
 		// Disable refresh button.
 		refreshButton.setEnabled(false);
+
 		// Create the read thread.
 		Thread readThread = new Thread(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.lang.Runnable#run()
-			 */
+			@Override
 			public void run() {
 				clearErrorMessage();
 				showReadProgressDialog();
 				try {
 					HashMap<String, String> parameters = xbeeManager.readBasicLocalParameters();
 					fillDeviceParameters(parameters);
-				} catch (TimeoutException e1) {
-					setErrorMessage("Error reading parameters > " + e1.getMessage());
-				} catch (XBeeException e1) {
-					setErrorMessage("Error reading parameters > " + e1.getMessage());
+				} catch (XBeeException e) {
+					setErrorMessage("Error reading parameters > " + e.getMessage());
 				}
 				hideProgressDialog();
+
 				// Enable refresh button.
 				getActivity().runOnUiThread(new Runnable() {
-					/*
-					 * (non-Javadoc)
-					 * @see java.lang.Runnable#run()
-					 */
+					@Override
 					public void run() {
 						refreshButton.setEnabled(true);
 					}
@@ -344,10 +328,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	 */
 	private void fillDeviceParameters(final HashMap<String, String> parameters) {
 		getActivity().runOnUiThread(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.lang.Runnable#run()
-			 */
+			@Override
 			public void run() {
 				serialPortText.setText(parameters.get(XBeeConstants.PARAM_SERIAL_PORT));
 				baudRateText.setText(parameters.get(XBeeConstants.PARAM_BAUD_RATE));
@@ -373,10 +354,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	private void readParameter(final String parameter) {
 		// Create the read thread.
 		Thread readThread = new Thread(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.lang.Runnable#run()
-			 */
+			@Override
 			public void run() {
 				clearErrorMessage();
 				showReadProgressDialog();
@@ -407,10 +385,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		}
 		// Create the write thread.
 		Thread writeThread = new Thread(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.lang.Runnable#run()
-			 */
+			@Override
 			public void run() {
 				clearErrorMessage();
 				showWriteProgressDialog();
@@ -485,10 +460,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	 */
 	private void updateParameterValue(final String parameter, final String value) {
 		getActivity().runOnUiThread(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.lang.Runnable#run()
-			 */
+			@Override
 			public void run() {
 				if (parameter.equals(XBeeConstants.PARAM_NODE_IDENTIFIER))
 					nodeIdentifierText.setText(value);
@@ -530,6 +502,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		readOtherParamDialog.show();
 		// This thread waits until dialog is closed, dialog is notified itself when that happens.
 		Thread waitThread = new Thread() {
+			@Override
 			public void run() {
 				synchronized (readOtherParamDialog) {
 					try {
@@ -539,6 +512,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
                     }
 				}
 				String parameter = readOtherParamDialog.getParameter();
+
 				// Sanity checks.
 				if (parameter == null)
 					return;
@@ -546,6 +520,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 					setErrorMessage("Invalid Parameter > " + parameter);
 					return;
 				}
+
 				// Perform read action.
 				readParameter(parameter);
 			}
@@ -563,6 +538,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		changeOtherParamDialog.show();
 		// This thread waits until dialog is closed, dialog is notified itself when that happens.
 		Thread waitThread = new Thread() {
+			@Override
 			public void run() {
 				synchronized (changeOtherParamDialog) {
 					try {
@@ -573,6 +549,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 				}
 				String parameter = changeOtherParamDialog.getParameter();
 				String value = changeOtherParamDialog.getValue();
+
 				// Sanity checks.
 				if (parameter == null)
 					return;
@@ -584,19 +561,12 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 					setErrorMessage("Invalid Parameter Value");
 					return;
 				}
+
 				// Perform write action.
 				writeParameter(parameter, value);
 			}
 		};
 		waitThread.start();
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.android.xbee.xbeemanagersample.AbstractXBeeDeviceFragment#getFragmentName()
-	 */
-	public String getFragmentName() {
-		return getResources().getString(R.string.device_info_fragment_title);
 	}
 	
 	/**
@@ -635,6 +605,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	private void setErrorMessage(String message) {
 		if (message == null)
 			return;
+
 		Message msg = handler.obtainMessage(ACTION_SET_ERROR_MESSAGE);
 		msg.obj = message;
 		handler.sendMessage(msg);
@@ -648,6 +619,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	private void setSuccessMessage(String message) {
 		if (message == null)
 			return;
+
 		Message msg = handler.obtainMessage(ACTION_SET_SUCCESS_MESSAGE);
 		msg.obj = message;
 		handler.sendMessage(msg);

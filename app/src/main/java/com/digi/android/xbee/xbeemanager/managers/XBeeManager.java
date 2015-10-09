@@ -19,7 +19,6 @@ import android.content.Context;
 import com.digi.android.xbee.xbeemanager.XBeeConstants;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.XBeeDevice;
-import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.listeners.IDataReceiveListener;
 import com.digi.xbee.api.listeners.IDiscoveryListener;
@@ -109,11 +108,11 @@ public class XBeeManager {
 	 * 
 	 * @param parameter AT parameter to set.
 	 * @param value Value of the parameter.
-	 * 
-	 * @throws TimeoutException if there is a timeout executing the request.
-	 * @throws XBeeException if there is any other error executing the request.
+	 *
+	 * @throws XBeeException if there is a timeout or
+	 *                       any other error executing the request.
 	 */
-	public void setLocalParameter(String parameter, byte[] value) throws TimeoutException, XBeeException {
+	public void setLocalParameter(String parameter, byte[] value) throws XBeeException {
 		localDevice.setParameter(parameter, value);
 	}
 	
@@ -123,11 +122,11 @@ public class XBeeManager {
 	 * @param parameter AT parameter to read.
 	 * 
 	 * @return The value of the given parameter.
-	 * 
-	 * @throws TimeoutException if there is a timeout executing the request.
-	 * @throws XBeeException if there is any other error executing the request.
+	 *
+	 * @throws XBeeException if there is a timeout or
+	 *                       any other error executing the request.
 	 */
-	public String getLocalParameter(String parameter) throws TimeoutException, XBeeException {
+	public String getLocalParameter(String parameter) throws XBeeException {
 		byte[] value = localDevice.getParameter(parameter);
 		return HexUtils.byteArrayToHexString(value);
 	}
@@ -137,10 +136,9 @@ public class XBeeManager {
 	 * 
 	 * @return Map with the basic read parameters of the local device.
 	 * 
-	 * @throws XBeeException if there is a timeout executing the request.
-	 * @throws TimeoutException if there is any other error executing the request.
+	 * @throws XBeeException if there is a timeout
 	 */
-	public HashMap<String, String> readBasicLocalParameters() throws TimeoutException, XBeeException {
+	public HashMap<String, String> readBasicLocalParameters() throws XBeeException {
 		localDevice.readDeviceInfo();
 		HashMap<String, String> readParams = new HashMap<String, String>();
 		readParams.put(XBeeConstants.PARAM_NODE_IDENTIFIER, localDevice.getNodeID());
@@ -172,10 +170,10 @@ public class XBeeManager {
 	 * 
 	 * @return Map with the basic read parameters of the local device.
 	 * 
-	 * @throws XBeeException if there is a timeout executing the request.
-	 * @throws TimeoutException if there is any other error executing the request.
+	 * @throws XBeeException if there is a timeout
+	 *                       or any other error executing the request.
 	 */
-	public HashMap<String, String> readBasicRemoteParameters(RemoteXBeeDevice remoteDevice) throws TimeoutException, XBeeException {
+	public HashMap<String, String> readBasicRemoteParameters(RemoteXBeeDevice remoteDevice) throws XBeeException {
 		remoteDevice.readDeviceInfo();
 		HashMap<String, String> readParams = new HashMap<String, String>();
 		readParams.put(XBeeConstants.PARAM_NODE_IDENTIFIER, remoteDevice.getNodeID());
@@ -192,10 +190,10 @@ public class XBeeManager {
 	 * @param data Data to send.
 	 * @param remoteDevice Remote XBee device to send data to.
 	 * 
-	 * @throws XBeeException if there is a timeout executing the request.
-	 * @throws TimeoutException if there is any other error executing the request.
+	 * @throws XBeeException if there is a timeout or
+	 *                       any other error executing the request.
 	 */
-	public void sendDataToRemote(byte[] data, RemoteXBeeDevice remoteDevice) throws TimeoutException, XBeeException {
+	public void sendDataToRemote(byte[] data, RemoteXBeeDevice remoteDevice) throws XBeeException {
 		localDevice.sendData(remoteDevice, data);
 	}
 	
@@ -238,10 +236,10 @@ public class XBeeManager {
 	/**
 	 * Saves changes to flash.
 	 * 
-	 * @throws TimeoutException if there is a timeout during the operation.
-	 * @throws XBeeException if there is any other error during the operation.
+	 * @throws XBeeException if there is a timeout or
+	 *                          any other error during the operation.
 	 */
-	public void saveChanges() throws TimeoutException, XBeeException {
+	public void saveChanges() throws XBeeException {
 		localDevice.writeChanges();
 	}
 	

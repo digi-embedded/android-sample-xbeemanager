@@ -43,6 +43,37 @@ public class ChangeOtherParameterDialog {
 		// Setup the layout.
 		setupLayout();
 	}
+
+	/**
+	 * Displays the input text dialog.
+	 */
+	public void show() {
+		// Reset the dialog values.
+		parameter = null;
+		value = null;
+		createDialog();
+		inputTextDialog.show();
+	}
+
+	/**
+	 * Returns the input text dialog value.
+	 *
+	 * @return The input text dialog value, {@code null} if dialog was
+	 *         cancelled or no text was entered.
+	 */
+	public String getParameter() {
+		return parameter;
+	}
+
+	/**
+	 * Returns the input text dialog value.
+	 *
+	 * @return The input text dialog value, {@code null} if dialog was
+	 *         cancelled or no text was entered.
+	 */
+	public String getValue() {
+		return value;
+	}
 	
 	/**
 	 * Configures the layout of the input text dialog.
@@ -67,6 +98,7 @@ public class ChangeOtherParameterDialog {
 		alertDialogBuilder.setTitle(R.string.edit_dialog_title);
 		alertDialogBuilder.setCancelable(false);
 		alertDialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				parameter = parameterText.getText().toString();
 				value = valueText.getText().toString();
@@ -76,6 +108,7 @@ public class ChangeOtherParameterDialog {
 			}
 		});
 		alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog,	int id) {
 				dialog.cancel();
 				synchronized (ChangeOtherParameterDialog.this) {
@@ -83,38 +116,8 @@ public class ChangeOtherParameterDialog {
 				}
 			}
 		});
+
 		// Create the dialog.
 		inputTextDialog = alertDialogBuilder.create();
-	}
-	
-	/**
-	 * Displays the input text dialog.
-	 */
-	public void show() {
-		// Reset the dialog values.
-		parameter = null;
-		value = null;
-		createDialog();
-		inputTextDialog.show();
-	}
-	
-	/**
-	 * Returns the input text dialog value.
-	 * 
-	 * @return The input text dialog value, {@code null} if dialog was
-	 *         cancelled or no text was entered.
-	 */
-	public String getParameter() {
-		return parameter;
-	}
-	
-	/**
-	 * Returns the input text dialog value.
-	 * 
-	 * @return The input text dialog value, {@code null} if dialog was
-	 *         cancelled or no text was entered.
-	 */
-	public String getValue() {
-		return value;
 	}
 }

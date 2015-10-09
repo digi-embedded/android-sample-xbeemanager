@@ -72,40 +72,40 @@ public class XBeeConnectActivity extends Activity {
 		public void handleMessage(Message msg) {
 
             XBeeConnectActivity xBeeConnectActivity = wActivity.get();
-            if (xBeeConnectActivity == null) return;
+            if (xBeeConnectActivity == null)
+				return;
 
 			switch (msg.what) {
-			case ACTION_CLEAR_ERROR_MESSAGE:
-				xBeeConnectActivity.errorText.setText("");
-				break;
-			case ACTION_SET_ERROR_MESSAGE:
-				xBeeConnectActivity.errorText.setText((String)msg.obj);
-				break;
-			case ACTION_SHOW_PROGRESS_DIALOG:
-				xBeeConnectActivity.progressDialog = new ProgressDialog(xBeeConnectActivity);
-                xBeeConnectActivity.progressDialog.setCancelable(false);
-				xBeeConnectActivity.progressDialog.setTitle(xBeeConnectActivity.getResources().getString(R.string.connect_dialog_title));
-				xBeeConnectActivity.progressDialog.setMessage(xBeeConnectActivity.getResources().getString(R.string.connect_dialog_text));
-				xBeeConnectActivity.progressDialog.show();
-				break;
-			case ACTION_HIDE_PROGRESS_DIALOG:
-				if (xBeeConnectActivity.progressDialog != null)
-					xBeeConnectActivity.progressDialog.dismiss();
-				break;
-			case ACTION_ENABLE_CONNECT_BUTTON:
-				xBeeConnectActivity.connectButton.setEnabled(true);
-				break;
-			case ACTION_DISABLE_CONNECT_BUTTON:
-				xBeeConnectActivity.connectButton.setEnabled(false);
-				break;
+				case ACTION_CLEAR_ERROR_MESSAGE:
+					xBeeConnectActivity.errorText.setText("");
+					break;
+				case ACTION_SET_ERROR_MESSAGE:
+					xBeeConnectActivity.errorText.setText((String)msg.obj);
+					break;
+				case ACTION_SHOW_PROGRESS_DIALOG:
+					xBeeConnectActivity.progressDialog = new ProgressDialog(xBeeConnectActivity);
+					xBeeConnectActivity.progressDialog.setCancelable(false);
+					xBeeConnectActivity.progressDialog.setTitle(xBeeConnectActivity.getResources().getString(R.string.connect_dialog_title));
+					xBeeConnectActivity.progressDialog.setMessage(xBeeConnectActivity.getResources().getString(R.string.connect_dialog_text));
+					xBeeConnectActivity.progressDialog.show();
+					break;
+				case ACTION_HIDE_PROGRESS_DIALOG:
+					if (xBeeConnectActivity.progressDialog != null)
+						xBeeConnectActivity.progressDialog.dismiss();
+					break;
+				case ACTION_ENABLE_CONNECT_BUTTON:
+					xBeeConnectActivity.connectButton.setEnabled(true);
+					break;
+				case ACTION_DISABLE_CONNECT_BUTTON:
+					xBeeConnectActivity.connectButton.setEnabled(false);
+					break;
+				default:
+					break;
 			}
 		}
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xbee_connect_activity);
@@ -131,10 +131,7 @@ public class XBeeConnectActivity extends Activity {
 		useUSBHostButton = (RadioButton)findViewById(R.id.usb_host_button);
 		useUSBHostButton.setChecked(true);
 		useUSBHostButton.setOnClickListener(new OnClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.View.OnClickListener#onClick(android.view.View)
-			 */
+			@Override
 			public void onClick(View v) {
 				handleUseUSBHostButtonPressed();
 			}
@@ -142,10 +139,7 @@ public class XBeeConnectActivity extends Activity {
 		useSerialButton = (RadioButton)findViewById(R.id.usb_serial_button);
 		useSerialButton.setChecked(false);
 		useSerialButton.setOnClickListener(new OnClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.View.OnClickListener#onClick(android.view.View)
-			 */
+			@Override
 			public void onClick(View v) {
 				handleUseSerialButtonPressed();
 			}
@@ -155,10 +149,7 @@ public class XBeeConnectActivity extends Activity {
 		baudRateSpinner = (Spinner)findViewById(R.id.baud_rate_spinner);
 		connectButton = (Button)findViewById(R.id.connect_button);
 		connectButton.setOnClickListener(new OnClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.View.OnClickListener#onClick(android.view.View)
-			 */
+			@Override
 			public void onClick(View v) {
 				handleConnectButtonPressed();
 			}
@@ -195,10 +186,7 @@ public class XBeeConnectActivity extends Activity {
 			xbeeManager.createXBeeDevice(serialPortSpinner.getSelectedItem().toString(), baudRate);
 		// Create the connection thread.
 		Thread connectThread = new Thread(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * @see java.lang.Runnable#run()
-			 */
+			@Override
 			public void run() {
 				clearErrorMessage();
 				disableConnectButton();

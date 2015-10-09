@@ -23,10 +23,7 @@ public class XBeeManagerApplication extends Application {
 	
 	private static XBeeManagerApplication instance;
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Application#onCreate()
-	 */
+	@Override
 	public void onCreate() {
 		super.onCreate();
 		// Save application instance.

@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/send_data_dialog_hexadecimal_text"
+        android:labelFor="@id/input_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <EditText
         android:id="@+id/input_text"
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content" 
         android:inputType="textMultiLine"
         android:lines="5"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:scrollHorizontally="false">
         <requestFocus />
     </EditText>

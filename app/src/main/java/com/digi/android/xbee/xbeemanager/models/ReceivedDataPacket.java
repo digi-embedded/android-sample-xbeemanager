@@ -19,18 +19,12 @@ public class ReceivedDataPacket extends AbstractReceivedPacket {
 		this.receivedData = receivedData;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket#getShortPacketData()
-	 */
+	@Override
 	public String getShortPacketData() {
 		return new String(receivedData);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket#getPacketData()
-	 */
+	@Override
 	public String getPacketData() {
 		return new String(receivedData);
 	}

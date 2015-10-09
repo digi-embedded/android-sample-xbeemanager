@@ -54,6 +54,7 @@ new tabs are displayed:
 
 Compatible with
 ---------------
+
 * ConnectCore 6 SBC
 * ConnectCore 6 SBC v2
 

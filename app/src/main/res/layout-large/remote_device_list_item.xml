@@ -12,12 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="3dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="10dp">
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="10dp">
         <ImageView
             android:id="@+id/list_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:contentDescription="@string/xbee_device"
             android:src="@drawable/xbee_module_flat"/>
     </LinearLayout>
     <!-- MAC Address-->
@@ -26,11 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/image"
-        android:layout_toRightOf="@id/image"
-        android:text="0013A20040123456"
+        android:layout_toEndOf="@id/image"
+        android:text="@string/initial_mac"
         android:textColor="#040404"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"/>
     <!-- Node Identifier -->
     <TextView
         android:id="@+id/node_identifier_text"
@@ -39,8 +41,8 @@
         android:layout_below="@id/mac_address_text"
         android:textColor="#343434"
         android:textSize="15sp"
-        android:layout_toRightOf="@+id/image"
-        android:text="ZB-3-ARTICUNO" />
+        android:layout_toEndOf="@+id/image"
+        android:text="@string/initial_ni" />
     <!-- 16-Bit Address -->
     <TextView
         android:id="@+id/address_16_text"
@@ -49,18 +51,19 @@
         android:layout_below="@id/node_identifier_text"
         android:textColor="#343434"
         android:textSize="15sp"
-        android:layout_toRightOf="@+id/image"
-        android:text="1234" />
+        android:layout_toEndOf="@+id/image"
+        android:text="@string/initial_16addr" />
      <!-- Remove  -->
      <ImageButton
         android:id="@+id/remove_button"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:src="@drawable/remove_xbee"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         android:scaleType="centerInside"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/remove"/>
  
 </RelativeLayout>

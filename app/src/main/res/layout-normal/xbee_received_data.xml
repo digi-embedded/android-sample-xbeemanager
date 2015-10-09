@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="3dp">
@@ -19,13 +20,13 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="57"
-            android:layout_marginRight="10dp">
+            android:layout_marginEnd="10dp">
             <TextView
                 android:id="@+id/received_packets_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:text="@string/received_xbee_packets_title"
                 android:textColor="@color/dark_gray"
                 android:padding="0px"
@@ -35,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_alignTop="@id/received_packets_title"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/button_red"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp"
@@ -47,17 +48,18 @@
                 android:id="@+id/received_packets_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/received_packets_title"
                 android:textColor="@color/dark_gray"
                 android:textStyle="italic"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp"/>
             <RelativeLayout
                 android:id="@+id/packet_list_header"
                 android:layout_width="match_parent"
                 android:layout_height="17dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@id/received_packets_text"
                 android:layout_marginTop="3dp"
                 android:background="@color/very_dark_gray" >
@@ -66,71 +68,75 @@
                     android:id="@+id/date_header"
                     android:layout_width="69dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="3dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="3dp"
                     android:text="@string/header_date"
                     android:textColor="@color/light_gray"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:ignore="SmallSp"/>
                 <!-- Separator -->
                 <View
                     android:id="@+id/separator_1"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/date_header"
+                    android:layout_toEndOf="@id/date_header"
                     android:background="@color/light_gray" />
                 <!-- Packet type -->
                 <TextView
                     android:id="@+id/header_packet_type"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@id/separator_1"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@id/separator_1"
                     android:text="@string/header_type"
                     android:textColor="@color/light_gray"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:ignore="SmallSp"/>
                 <!-- Separator -->
                 <View
                     android:id="@+id/separator_2"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/header_packet_type"
+                    android:layout_toEndOf="@id/header_packet_type"
                     android:background="@color/light_gray" />
                 <!-- Source address -->
                 <TextView
                     android:id="@+id/header_source_address"
                     android:layout_width="105dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@id/separator_2"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@id/separator_2"
                     android:text="@string/header_source_address"
                     android:textColor="@color/light_gray"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:ignore="SmallSp"/>
                 <!-- Separator -->
                 <View
                     android:id="@+id/separator_3"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/header_source_address"
+                    android:layout_toEndOf="@id/header_source_address"
                     android:background="@color/light_gray" />
                 <!-- PAcket data -->
                 <TextView
                     android:id="@+id/header_packet_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@id/separator_3"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@id/separator_3"
                     android:ellipsize="end"
                     android:text="@string/header_packet_data"
                     android:textColor="@color/light_gray"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:ignore="SmallSp"/>
             </RelativeLayout>
             <ListView
                 android:id="@+id/received_packets_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/packet_list_header"
                 android:background="@color/light_gray"
                 android:overScrollMode="never"
@@ -144,14 +150,14 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="41"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="0px">
             <TextView
                 android:id="@+id/received_xbee_packet_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:text="@string/selected_xbee_packet_title"
                 android:textColor="@color/dark_gray"
                 android:textSize="20sp" />
@@ -167,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/received_xbee_packet_title"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:paddingTop="3dp"
                 android:text="@string/received_date_short"
                 android:textColor="@color/dark_gray"
@@ -177,9 +183,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/received_xbee_packet_title"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="3dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:textColor="@color/Black"
                 android:textSize="16sp" />
             <TextView
@@ -188,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/date_label"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/type_short"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp" />
@@ -198,8 +204,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/date_label"
                 android:layout_marginTop="3dp"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/Black"
                 android:textSize="16sp" />
             <TextView
@@ -208,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/packet_type_label"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/source_address_short"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp" />
@@ -218,8 +224,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/packet_type_label"
                 android:layout_marginTop="3dp"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/Black"
                 android:textSize="16sp" />
             <TextView
@@ -228,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/source_address_label"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="@string/packet_data"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp" />
@@ -238,8 +244,8 @@
                 android:layout_height="1dp"
                 android:layout_below="@id/packet_data_label"
                 android:layout_marginTop="3dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:background="@color/dark_gray" />
             <TextView
                 android:id="@+id/packet_data_text"
@@ -247,9 +253,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/horizontal_separator"
                 android:layout_marginTop="3dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_alignParentLeft="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_alignParentStart="true"
                 android:textColor="@color/Black"
                 android:textSize="16sp" />
         </RelativeLayout>

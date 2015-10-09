@@ -37,10 +37,7 @@ public class XBeeTabsActivity extends FragmentActivity {
 	private ViewPager viewPager;
     private XBeeManager xbeeManager;
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xbee_tabs_activity);
@@ -53,6 +50,13 @@ public class XBeeTabsActivity extends FragmentActivity {
 		
 		// Configure Action Bar.
 		configureTabs();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		// Disconnect the device.
+		xbeeManager.closeConnection();
 	}
 	
 	/**
@@ -68,7 +72,9 @@ public class XBeeTabsActivity extends FragmentActivity {
 			 */
 			public void onPageSelected(int position) {
 				// When swiping between pages, select the corresponding tab.
-				getActionBar().setSelectedNavigationItem(position);
+				ActionBar actionBar = getActionBar();
+				if (actionBar != null)
+					actionBar.setSelectedNavigationItem(position);
 			}
 		});
 		viewPager.setOffscreenPageLimit(2);
@@ -81,6 +87,9 @@ public class XBeeTabsActivity extends FragmentActivity {
 	 */
 	private void configureTabs() {
 		ActionBar actionBar = getActionBar();
+		if (actionBar == null)
+			return;
+
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		XBeeDeviceTabListener xbeeDeviceTabListener = new XBeeDeviceTabListener();
 
@@ -101,42 +110,23 @@ public class XBeeTabsActivity extends FragmentActivity {
 		actionBar.addTab(framesTab);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.support.v4.app.FragmentActivity#onStop()
-	 */
-	protected void onStop() {
-		super.onStop();
-		// Disconnect the device.
-		xbeeManager.closeConnection();
-	}
-	
 	/**
 	 * Helper class used to handle the events of the different tab items.
 	 */
 	private class XBeeDeviceTabListener implements TabListener {
 
-		/*
-		 * (non-Javadoc)
-		 * @see android.app.ActionBar.TabListener#onTabReselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
-		 */
+		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
 			// Do nothing.
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see android.app.ActionBar.TabListener#onTabSelected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
-		 */
+		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
 			// When the tab is selected, switch to the corresponding page in the ViewPager.
 			viewPager.setCurrentItem(tab.getPosition());
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see android.app.ActionBar.TabListener#onTabUnselected(android.app.ActionBar.Tab, android.app.FragmentTransaction)
-		 */
+		@Override
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 			// Do nothing.
 		}
@@ -157,36 +147,31 @@ public class XBeeTabsActivity extends FragmentActivity {
 			super(fm);
 			fragments = new ArrayList<AbstractXBeeDeviceFragment>();
 			// Create device information fragment.
-			infoFragment = new XBeeDeviceInfoFragment(xbeeManager, XBeeTabsActivity.this);
+			infoFragment = new XBeeDeviceInfoFragment();
+			infoFragment.setXBeeManager(xbeeManager);
+			((XBeeDeviceInfoFragment)infoFragment).setXBeeTabsActivity(XBeeTabsActivity.this);
 			fragments.add(infoFragment);
 			// Create device discovery fragment.
-			discoverFragment = new XBeeDeviceDiscoveryFragment(xbeeManager);
+			discoverFragment = new XBeeDeviceDiscoveryFragment();
+			discoverFragment.setXBeeManager(xbeeManager);
 			fragments.add(discoverFragment);
 			// Create received frames fragment.
-			framesFragment = new XBeeReceivedPacketsFragment(xbeeManager);
+			framesFragment = new XBeeReceivedPacketsFragment();
+			framesFragment.setXBeeManager(xbeeManager);
 			fragments.add(framesFragment);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see android.support.v4.app.FragmentStatePagerAdapter#getItem(int)
-		 */
+		@Override
 		public Fragment getItem(int i) {
 			return fragments.get(i);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see android.support.v4.view.PagerAdapter#getCount()
-		 */
+		@Override
 		public int getCount() {
 			return fragments.size();
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see android.support.v4.view.PagerAdapter#getPageTitle(int)
-		 */
+		@Override
 		public CharSequence getPageTitle(int position) {
 			return fragments.get(position).getFragmentName();
 		}

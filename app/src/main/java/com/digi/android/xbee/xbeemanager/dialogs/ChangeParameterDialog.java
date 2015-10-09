@@ -60,6 +60,27 @@ public class ChangeParameterDialog {
 		// Setup the layout.
 		setupLayout();
 	}
+
+
+	/**
+	 * Displays the input text dialog.
+	 */
+	public void show() {
+		// Reset the value.
+		textValue = null;
+		createDialog();
+		inputTextDialog.show();
+	}
+
+	/**
+	 * Returns the input text dialog value.
+	 *
+	 * @return The input text dialog value, {@code null} if dialog was
+	 *         cancelled or no text was entered.
+	 */
+	public String getTextValue() {
+		return textValue;
+	}
 	
 	/**
 	 * Configures the layout of the input text dialog.
@@ -69,36 +90,38 @@ public class ChangeParameterDialog {
 		// Create the layout.
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 		switch (type) {
-		case TYPE_TEXT:
-			inputTextDialogView = layoutInflater.inflate(R.layout.change_text_param_dialog, null);
-			break;
-		case TYPE_NUMERIC:
-			inputTextDialogView = layoutInflater.inflate(R.layout.change_numeric_param_dialog, null);
-			break;
-		case TYPE_HEXADECIMAL:
-			inputTextDialogView = layoutInflater.inflate(R.layout.change_hexadecimal_param_dialog, null);
-			break;
+			case TYPE_TEXT:
+				inputTextDialogView = layoutInflater.inflate(R.layout.change_text_param_dialog, null);
+				break;
+			case TYPE_NUMERIC:
+				inputTextDialogView = layoutInflater.inflate(R.layout.change_numeric_param_dialog, null);
+				break;
+			case TYPE_HEXADECIMAL:
+				inputTextDialogView = layoutInflater.inflate(R.layout.change_hexadecimal_param_dialog, null);
+				break;
+			default:
+				break;
 		}
 		// Configure the input text.
 		inputText = (EditText) inputTextDialogView.findViewById(R.id.input_text);
 		if (oldText != null)
 			inputText.setText(oldText);
+
 		inputText.addTextChangedListener(new TextValidator(inputText) {
-			/*
-			 * (non-Javadoc)
-			 * @see com.digi.android.xbee.xbeemanager.dialogs.SendDataDialog.TextValidator#validate(android.widget.EditText, java.lang.String)
-			 */
+			@Override
 			public void validate(EditText textView, String text) {
 				if (text.length() == 0) {
 					inputText.setError(ERROR_VALUE_EMPTY);
 					inputTextDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 					return;
 				}
+
 				if (type == TYPE_HEXADECIMAL && !Pattern.matches(HEXADECIMAL_PATTERN, text)) {
 					inputText.setError(ERROR_INVALID_HEX_VALUE);
 					inputTextDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 					return;
 				}
+
 				inputText.setError(null);
 				inputTextDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 			}
@@ -115,6 +138,7 @@ public class ChangeParameterDialog {
 		alertDialogBuilder.setTitle(R.string.edit_dialog_title);
 		alertDialogBuilder.setCancelable(false);
 		alertDialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				textValue = inputText.getText().toString();
 				synchronized (ChangeParameterDialog.this) {
@@ -123,6 +147,7 @@ public class ChangeParameterDialog {
 			}
 		});
 		alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog,	int id) {
 				dialog.cancel();
 				synchronized (ChangeParameterDialog.this) {
@@ -132,25 +157,5 @@ public class ChangeParameterDialog {
 		});
 		// Create the dialog.
 		inputTextDialog = alertDialogBuilder.create();
-	}
-	
-	/**
-	 * Displays the input text dialog.
-	 */
-	public void show() {
-		// Reset the value.
-		textValue = null;
-		createDialog();
-		inputTextDialog.show();
-	}
-	
-	/**
-	 * Returns the input text dialog value.
-	 * 
-	 * @return The input text dialog value, {@code null} if dialog was
-	 *         cancelled or no text was entered.
-	 */
-	public String getTextValue() {
-		return textValue;
 	}
 }

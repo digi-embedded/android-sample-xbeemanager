@@ -20,18 +20,12 @@ public class ReceivedModemStatusPacket extends AbstractReceivedPacket {
 		this.modemStatusEvent = modemStatusEvent;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket#getShortPacketData()
-	 */
+	@Override
 	public String getShortPacketData() {
 		return modemStatusEvent.getDescription();
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket#getPacketData()
-	 */
+	@Override
 	public String getPacketData() {
 		return modemStatusEvent.getDescription();
 	}
