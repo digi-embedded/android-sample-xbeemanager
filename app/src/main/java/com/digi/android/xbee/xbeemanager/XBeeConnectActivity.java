@@ -58,21 +58,21 @@ public class XBeeConnectActivity extends Activity {
 	
 	private XBeeManager xbeeManager;
 
-    private IncomingHandler handler = new IncomingHandler(this);
+	private IncomingHandler handler = new IncomingHandler(this);
 
-    // Handler used to perform actions in the UI thread.
-    static class IncomingHandler extends Handler {
-        private final WeakReference<XBeeConnectActivity> wActivity;
+	// Handler used to perform actions in the UI thread.
+	static class IncomingHandler extends Handler {
+		private final WeakReference<XBeeConnectActivity> wActivity;
 
-        IncomingHandler(XBeeConnectActivity activity) {
-            wActivity = new WeakReference<XBeeConnectActivity>(activity);
-        }
+		IncomingHandler(XBeeConnectActivity activity) {
+			wActivity = new WeakReference<XBeeConnectActivity>(activity);
+	}
 
-        @Override
+		@Override
 		public void handleMessage(Message msg) {
 
-            XBeeConnectActivity xBeeConnectActivity = wActivity.get();
-            if (xBeeConnectActivity == null)
+			XBeeConnectActivity xBeeConnectActivity = wActivity.get();
+			if (xBeeConnectActivity == null)
 				return;
 
 			switch (msg.what) {
@@ -210,7 +210,7 @@ public class XBeeConnectActivity extends Activity {
 	 */
 	private void fillSerialPorts() {
 		String[] serialPorts;
-        ArrayAdapter<String> serialPortsAdapter;
+		ArrayAdapter<String> serialPortsAdapter;
 		try {
 			serialPorts = SerialPortRxTxAndroid.listSerialPorts();
 			if (serialPorts == null || serialPorts.length == 0) {

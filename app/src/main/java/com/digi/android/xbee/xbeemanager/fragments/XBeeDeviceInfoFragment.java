@@ -59,22 +59,22 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	
 	private ProgressDialog progressDialog;
 
-    private IncomingHandler handler = new IncomingHandler(this);
+	private IncomingHandler handler = new IncomingHandler(this);
 
-    // Handler used to perform actions in the UI thread.
-    static class IncomingHandler extends Handler {
+	// Handler used to perform actions in the UI thread.
+	static class IncomingHandler extends Handler {
 
-        private final WeakReference<XBeeDeviceInfoFragment> wActivity;
+		private final WeakReference<XBeeDeviceInfoFragment> wActivity;
 
-        IncomingHandler(XBeeDeviceInfoFragment activity) {
-            wActivity = new WeakReference<XBeeDeviceInfoFragment>(activity);
-        }
+		IncomingHandler(XBeeDeviceInfoFragment activity) {
+			wActivity = new WeakReference<XBeeDeviceInfoFragment>(activity);
+		}
 
-        @Override
-        public void handleMessage(Message msg) {
+		@Override
+		public void handleMessage(Message msg) {
 
-            XBeeDeviceInfoFragment devInfoFragment = wActivity.get();
-            if (devInfoFragment == null)
+			XBeeDeviceInfoFragment devInfoFragment = wActivity.get();
+			if (devInfoFragment == null)
 				return;
 
 			switch (msg.what) {
@@ -276,8 +276,8 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 						try {
 							changeParameterDialog.wait();
 						} catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+							e.printStackTrace();
+						}
 					}
 					String newValue = changeParameterDialog.getTextValue();
 					if (newValue != null)
@@ -508,8 +508,8 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 					try {
 						readOtherParamDialog.wait();
 					} catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+						e.printStackTrace();
+					}
 				}
 				String parameter = readOtherParamDialog.getParameter();
 
@@ -544,8 +544,8 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 					try {
 						changeOtherParamDialog.wait();
 					} catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+						e.printStackTrace();
+					}
 				}
 				String parameter = changeOtherParamDialog.getParameter();
 				String value = changeOtherParamDialog.getValue();

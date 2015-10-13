@@ -58,22 +58,22 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 	
 	private final Object receivedPacketsLock = new Object();
 
-    private IncomingHandler handler = new IncomingHandler(this);
+	private IncomingHandler handler = new IncomingHandler(this);
 
-    // Handler used to perform actions in the UI thread.
-    static class IncomingHandler extends Handler {
+	// Handler used to perform actions in the UI thread.
+	static class IncomingHandler extends Handler {
 
-        private final WeakReference<XBeeReceivedPacketsFragment> wActivity;
+		private final WeakReference<XBeeReceivedPacketsFragment> wActivity;
 
-        IncomingHandler(XBeeReceivedPacketsFragment activity) {
-            wActivity = new WeakReference<XBeeReceivedPacketsFragment>(activity);
-        }
+		IncomingHandler(XBeeReceivedPacketsFragment activity) {
+			wActivity = new WeakReference<XBeeReceivedPacketsFragment>(activity);
+		}
 
-        @Override
+		@Override
 		public void handleMessage(Message msg) {
 
-            XBeeReceivedPacketsFragment recPacketsFragment = wActivity.get();
-            if (recPacketsFragment == null)
+			XBeeReceivedPacketsFragment recPacketsFragment = wActivity.get();
+			if (recPacketsFragment == null)
 				return;
 
 			switch (msg.what) {
