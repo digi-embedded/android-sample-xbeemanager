@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="25dp"
     android:background="@drawable/remote_xbee_list_selector"
-    android:padding="3dp"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:padding="3dp">
     <!-- Date-->
     <TextView
         android:id="@+id/date_text"
@@ -16,53 +16,53 @@
         android:textColor="#343434"
         android:textSize="16sp" />
     <!-- Separator -->
-    <View 
+    <View
         android:id="@+id/separator_1"
         android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:background="#343434"
-        android:layout_toEndOf="@id/date_text"/>
+        android:layout_toEndOf="@id/date_text"
+        android:background="#343434" />
     <!-- Packet type -->
     <TextView
         android:id="@+id/packet_type_text"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/separator_1"
         android:textColor="#343434"
-        android:textSize="16sp"
-        android:layout_toEndOf="@id/separator_1" />
+        android:textSize="16sp" />
     <!-- Separator -->
-    <View 
+    <View
         android:id="@+id/separator_2"
         android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:background="#343434"
-        android:layout_toEndOf="@id/packet_type_text"/>
-     <!-- Source address  -->
-     <TextView
+        android:layout_toEndOf="@id/packet_type_text"
+        android:background="#343434" />
+    <!-- Source address  -->
+    <TextView
         android:id="@+id/source_address_text"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@id/separator_2"
         android:textColor="#343434"
-        android:textSize="16sp"/>
-     <!-- Separator -->
-    <View 
+        android:textSize="16sp" />
+    <!-- Separator -->
+    <View
         android:id="@+id/separator_3"
         android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:background="#343434"
-        android:layout_toEndOf="@id/source_address_text"/>
-     <!--  Packet data -->
-     <TextView
+        android:layout_toEndOf="@id/source_address_text"
+        android:background="#343434" />
+    <!--  Packet data -->
+    <TextView
         android:id="@+id/packet_data_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@id/separator_3"
-        android:textColor="#343434"
-        android:textSize="16sp"
         android:ellipsize="end"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:textColor="#343434"
+        android:textSize="16sp" />
 </RelativeLayout>

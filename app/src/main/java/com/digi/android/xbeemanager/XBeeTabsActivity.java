@@ -10,15 +10,15 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager;
+package com.digi.android.xbeemanager;
 
 import java.util.ArrayList;
 
-import com.digi.android.xbee.xbeemanager.fragments.AbstractXBeeDeviceFragment;
-import com.digi.android.xbee.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
-import com.digi.android.xbee.xbeemanager.fragments.XBeeDeviceInfoFragment;
-import com.digi.android.xbee.xbeemanager.fragments.XBeeReceivedPacketsFragment;
-import com.digi.android.xbee.xbeemanager.managers.XBeeManager;
+import com.digi.android.xbeemanager.fragments.AbstractXBeeDeviceFragment;
+import com.digi.android.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
+import com.digi.android.xbeemanager.fragments.XBeeDeviceInfoFragment;
+import com.digi.android.xbeemanager.fragments.XBeeReceivedPacketsFragment;
+import com.digi.android.xbeemanager.managers.XBeeManager;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;

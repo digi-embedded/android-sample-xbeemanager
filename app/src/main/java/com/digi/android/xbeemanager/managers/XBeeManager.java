@@ -10,13 +10,13 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager.managers;
+package com.digi.android.xbeemanager.managers;
 
 import java.util.HashMap;
 
 import android.content.Context;
 
-import com.digi.android.xbee.xbeemanager.XBeeConstants;
+import com.digi.android.xbeemanager.XBeeConstants;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;

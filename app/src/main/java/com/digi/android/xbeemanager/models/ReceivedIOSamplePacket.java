@@ -1,4 +1,4 @@
-package com.digi.android.xbee.xbeemanager.models;
+package com.digi.android.xbeemanager.models;
 
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOSample;

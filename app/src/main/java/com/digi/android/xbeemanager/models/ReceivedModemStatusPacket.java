@@ -1,4 +1,4 @@
-package com.digi.android.xbee.xbeemanager.models;
+package com.digi.android.xbeemanager.models;
 
 import com.digi.xbee.api.models.ModemStatusEvent;
 import com.digi.xbee.api.models.XBee64BitAddress;

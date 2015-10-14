@@ -10,9 +10,9 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager.dialogs;
+package com.digi.android.xbeemanager.dialogs;
 
-import com.digi.android.xbee.xbeemanager.R;
+import com.digi.android.xbeemanager.R;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

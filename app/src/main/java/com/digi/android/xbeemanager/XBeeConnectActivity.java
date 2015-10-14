@@ -10,9 +10,9 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager;
+package com.digi.android.xbeemanager;
 
-import com.digi.android.xbee.xbeemanager.managers.XBeeManager;
+import com.digi.android.xbeemanager.managers.XBeeManager;
 import com.digi.xbee.api.connection.serial.SerialPortRxTxAndroid;
 import com.digi.xbee.api.exceptions.XBeeException;
 

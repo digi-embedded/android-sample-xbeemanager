@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">XBee Manager Sample</string>
     <!-- Actions -->
     <string name="select_serial_port">- Select the serial connection to use</string>
     <string name="select_baud_rate">- Select the connection baud rate</string>

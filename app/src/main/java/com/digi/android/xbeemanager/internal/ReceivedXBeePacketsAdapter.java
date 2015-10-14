@@ -10,12 +10,12 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager.internal;
+package com.digi.android.xbeemanager.internal;
 
 import java.util.ArrayList;
 
-import com.digi.android.xbee.xbeemanager.R;
-import com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket;
+import com.digi.android.xbeemanager.R;
+import com.digi.android.xbeemanager.models.AbstractReceivedPacket;
 import com.digi.xbee.api.utils.ByteUtils;
 
 import android.annotation.SuppressLint;

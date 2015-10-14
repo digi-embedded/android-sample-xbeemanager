@@ -10,18 +10,18 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager.fragments;
+package com.digi.android.xbeemanager.fragments;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import com.digi.android.xbee.xbeemanager.R;
-import com.digi.android.xbee.xbeemanager.internal.ReceivedXBeePacketsAdapter;
-import com.digi.android.xbee.xbeemanager.internal.RemoteXBeeDevicesAdapter;
-import com.digi.android.xbee.xbeemanager.models.AbstractReceivedPacket;
-import com.digi.android.xbee.xbeemanager.models.ReceivedDataPacket;
-import com.digi.android.xbee.xbeemanager.models.ReceivedIOSamplePacket;
-import com.digi.android.xbee.xbeemanager.models.ReceivedModemStatusPacket;
+import com.digi.android.xbeemanager.R;
+import com.digi.android.xbeemanager.internal.ReceivedXBeePacketsAdapter;
+import com.digi.android.xbeemanager.internal.RemoteXBeeDevicesAdapter;
+import com.digi.android.xbeemanager.models.AbstractReceivedPacket;
+import com.digi.android.xbeemanager.models.ReceivedDataPacket;
+import com.digi.android.xbeemanager.models.ReceivedIOSamplePacket;
+import com.digi.android.xbeemanager.models.ReceivedModemStatusPacket;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.listeners.IDataReceiveListener;

@@ -3,11 +3,13 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
     android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/panel"
-        android:orientation="vertical" >
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -15,28 +17,33 @@
             android:text="@string/xbee_device_manager"
             android:textColor="@color/dark_gray"
             android:textSize="45sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
                 android:layout_weight="34"
+                android:contentDescription="@string/xbee_device"
                 android:scaleType="fitCenter"
-                android:src="@drawable/xbee_module_flat"
-                android:contentDescription="@string/xbee_device"/>
+                android:src="@drawable/xbee_module_flat" />
+
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:background="@color/dark_gray" />
+
             <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10sp"
-                android:layout_weight="64" >
+                android:layout_weight="64">
+
                 <TextView
                     android:id="@+id/connect_title"
                     android:layout_width="fill_parent"
@@ -44,6 +51,7 @@
                     android:text="@string/device_connection"
                     android:textColor="@color/dark_gray"
                     android:textSize="35sp" />
+
                 <TextView
                     android:id="@+id/serial_port_title"
                     android:layout_width="fill_parent"
@@ -53,6 +61,7 @@
                     android:text="@string/select_serial_port"
                     android:textColor="@color/dark_gray"
                     android:textSize="24sp" />
+
                 <RadioGroup
                     android:id="@+id/serial_port_group"
                     android:layout_width="440dp"
@@ -61,7 +70,8 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="5dp"
                     android:background="@color/light_gray"
-                    android:padding="5dp" >
+                    android:padding="5dp">
+
                     <RadioButton
                         android:id="@+id/usb_host_button"
                         android:layout_width="fill_parent"
@@ -70,6 +80,7 @@
                         android:text="@string/use_usb_host"
                         android:textColor="@color/dark_gray"
                         android:textSize="18sp" />
+
                     <RadioButton
                         android:id="@+id/usb_serial_button"
                         android:layout_width="wrap_content"
@@ -77,11 +88,13 @@
                         android:text="@string/use_serial_port"
                         android:textColor="@color/dark_gray"
                         android:textSize="18sp" />
+
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginStart="40dp" >
+                        android:layout_marginStart="40dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/serial_port_label"
                             android:layout_width="wrap_content"
@@ -90,6 +103,7 @@
                             android:text="@string/serial_port"
                             android:textColor="@color/dark_gray"
                             android:textSize="18sp" />
+
                         <Spinner
                             android:id="@+id/serial_port_spinner"
                             android:layout_width="200dp"
@@ -99,6 +113,7 @@
                             android:textSize="18sp" />
                     </LinearLayout>
                 </RadioGroup>
+
                 <TextView
                     android:id="@+id/baud_rate_title"
                     android:layout_width="fill_parent"
@@ -109,6 +124,7 @@
                     android:text="@string/select_baud_rate"
                     android:textColor="@color/dark_gray"
                     android:textSize="24sp" />
+
                 <LinearLayout
                     android:layout_width="440dp"
                     android:layout_height="wrap_content"
@@ -116,7 +132,8 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="5dp"
                     android:background="@color/light_gray"
-                    android:padding="5dp" >
+                    android:padding="5dp">
+
                     <TextView
                         android:id="@+id/baud_rate_label"
                         android:layout_width="wrap_content"
@@ -125,6 +142,7 @@
                         android:text="@string/baud_rate"
                         android:textColor="@color/dark_gray"
                         android:textSize="18sp" />
+
                     <Spinner
                         android:id="@+id/baud_rate_spinner"
                         android:layout_width="150dp"
@@ -132,18 +150,20 @@
                         android:layout_marginStart="10dp"
                         android:textSize="18sp" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/error_text"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/connect_button"
-                    android:layout_marginStart="10dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@+id/connect_button"
                     android:textColor="@color/red"
                     android:textSize="18sp"
                     android:textStyle="italic" />
+
                 <Button
                     android:id="@id/connect_button"
                     android:layout_width="wrap_content"

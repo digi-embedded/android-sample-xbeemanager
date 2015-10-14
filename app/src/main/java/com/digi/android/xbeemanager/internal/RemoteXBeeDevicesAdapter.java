@@ -10,12 +10,12 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager.internal;
+package com.digi.android.xbeemanager.internal;
 
 import java.util.ArrayList;
 
-import com.digi.android.xbee.xbeemanager.R;
-import com.digi.android.xbee.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
+import com.digi.android.xbeemanager.R;
+import com.digi.android.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.utils.ByteUtils;
 

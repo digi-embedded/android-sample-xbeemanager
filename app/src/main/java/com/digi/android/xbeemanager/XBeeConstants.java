@@ -10,7 +10,7 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager;
+package com.digi.android.xbeemanager;
 
 public class XBeeConstants {
 

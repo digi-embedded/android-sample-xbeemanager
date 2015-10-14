@@ -10,7 +10,7 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager.internal;
+package com.digi.android.xbeemanager.internal;
 
 import android.text.Editable;
 import android.text.TextWatcher;

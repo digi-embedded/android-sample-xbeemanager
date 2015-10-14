@@ -10,11 +10,11 @@
  * =======================================================================
  */
 
-package com.digi.android.xbee.xbeemanager.fragments;
+package com.digi.android.xbeemanager.fragments;
 
 import android.support.v4.app.Fragment;
 
-import com.digi.android.xbee.xbeemanager.managers.XBeeManager;
+import com.digi.android.xbeemanager.managers.XBeeManager;
 
 public abstract class AbstractXBeeDeviceFragment extends Fragment {
 	
