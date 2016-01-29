@@ -14,9 +14,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.dialogs;
+package com.digi.android.sample.xbeemanager.dialogs;
 
-import com.digi.android.xbeemanager.R;
+import com.digi.android.sample.xbeemanager.R;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -26,22 +26,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-public class ChangeOtherParameterDialog {
+public class ReadOtherParameterDialog {
 	
 	// Variables.
 	private Context context;
 	
 	private EditText parameterText;
-	private EditText valueText;
 	
 	private View inputTextDialogView;
 	
 	private AlertDialog inputTextDialog;
 	
 	private String parameter;
-	private String value;
 	
-	public ChangeOtherParameterDialog(Context context) {
+	public ReadOtherParameterDialog(Context context) {
 		this.context = context;
 		
 		// Setup the layout.
@@ -54,7 +52,6 @@ public class ChangeOtherParameterDialog {
 	public void show() {
 		// Reset the dialog values.
 		parameter = null;
-		value = null;
 		createDialog();
 		inputTextDialog.show();
 	}
@@ -68,16 +65,6 @@ public class ChangeOtherParameterDialog {
 	public String getParameter() {
 		return parameter;
 	}
-
-	/**
-	 * Returns the input text dialog value.
-	 *
-	 * @return The input text dialog value, {@code null} if dialog was
-	 *         cancelled or no text was entered.
-	 */
-	public String getValue() {
-		return value;
-	}
 	
 	/**
 	 * Configures the layout of the input text dialog.
@@ -86,10 +73,9 @@ public class ChangeOtherParameterDialog {
 	private void setupLayout() {
 		// Create the layout.
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
-		inputTextDialogView = layoutInflater.inflate(R.layout.change_other_param_dialog, null);
+		inputTextDialogView = layoutInflater.inflate(R.layout.read_other_param_dialog, null);
 		// Configure the input texts.
 		parameterText = (EditText) inputTextDialogView.findViewById(R.id.param_text);
-		valueText = (EditText) inputTextDialogView.findViewById(R.id.value_text);
 	}
 	
 	/**
@@ -99,15 +85,14 @@ public class ChangeOtherParameterDialog {
 		// Setup the dialog window.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		alertDialogBuilder.setView(inputTextDialogView);
-		alertDialogBuilder.setTitle(R.string.edit_dialog_title);
+		alertDialogBuilder.setTitle(R.string.read_dialog_title);
 		alertDialogBuilder.setCancelable(false);
 		alertDialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				parameter = parameterText.getText().toString();
-				value = valueText.getText().toString();
-				synchronized (ChangeOtherParameterDialog.this) {
-					ChangeOtherParameterDialog.this.notify();
+				synchronized (ReadOtherParameterDialog.this) {
+					ReadOtherParameterDialog.this.notify();
 				}
 			}
 		});
@@ -115,12 +100,11 @@ public class ChangeOtherParameterDialog {
 			@Override
 			public void onClick(DialogInterface dialog,	int id) {
 				dialog.cancel();
-				synchronized (ChangeOtherParameterDialog.this) {
-					ChangeOtherParameterDialog.this.notify();
+				synchronized (ReadOtherParameterDialog.this) {
+					ReadOtherParameterDialog.this.notify();
 				}
 			}
 		});
-
 		// Create the dialog.
 		inputTextDialog = alertDialogBuilder.create();
 	}

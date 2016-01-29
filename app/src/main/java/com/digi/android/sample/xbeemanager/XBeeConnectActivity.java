@@ -14,9 +14,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager;
+package com.digi.android.sample.xbeemanager;
 
-import com.digi.android.xbeemanager.managers.XBeeManager;
+import com.digi.android.sample.xbeemanager.managers.XBeeManager;
 import com.digi.xbee.api.connection.serial.SerialPortRxTxAndroid;
 import com.digi.xbee.api.exceptions.XBeeException;
 

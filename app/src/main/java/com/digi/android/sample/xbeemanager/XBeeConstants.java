@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager;
+package com.digi.android.sample.xbeemanager;
 
 public class XBeeConstants {
 

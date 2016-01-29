@@ -14,12 +14,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.dialogs;
+package com.digi.android.sample.xbeemanager.dialogs;
 
 import java.util.regex.Pattern;
 
-import com.digi.android.xbeemanager.R;
-import com.digi.android.xbeemanager.internal.TextValidator;
+import com.digi.android.sample.xbeemanager.R;
+import com.digi.android.sample.xbeemanager.internal.TextValidator;
 import com.digi.xbee.api.utils.HexUtils;
 
 import android.annotation.SuppressLint;

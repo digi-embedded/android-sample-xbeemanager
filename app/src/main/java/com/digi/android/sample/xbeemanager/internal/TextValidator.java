@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.internal;
+package com.digi.android.sample.xbeemanager.internal;
 
 import android.text.Editable;
 import android.text.TextWatcher;

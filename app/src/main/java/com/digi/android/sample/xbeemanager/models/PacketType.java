@@ -1,4 +1,4 @@
-package com.digi.android.xbeemanager.models;
+package com.digi.android.sample.xbeemanager.models;
 
 public enum PacketType {
 	

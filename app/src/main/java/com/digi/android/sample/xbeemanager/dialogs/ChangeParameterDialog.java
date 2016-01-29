@@ -14,9 +14,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.dialogs;
+package com.digi.android.sample.xbeemanager.dialogs;
 
-import com.digi.android.xbeemanager.R;
+import java.util.regex.Pattern;
+
+import com.digi.android.sample.xbeemanager.R;
+import com.digi.android.sample.xbeemanager.internal.TextValidator;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -26,32 +29,49 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-public class ReadOtherParameterDialog {
+public class ChangeParameterDialog {
+
+	// Constants.
+	public final static int TYPE_TEXT = 0;
+	public final static int TYPE_NUMERIC = 1;
+	public final static int TYPE_HEXADECIMAL = 2;
+	
+	private final static String HEXADECIMAL_PATTERN = "[0-9a-fA-F]+";
+	
+	private final static String ERROR_VALUE_EMPTY = "Value cannot be empty.";
+	private final static String ERROR_INVALID_HEX_VALUE = "Invalid hexadecimal value.";
 	
 	// Variables.
 	private Context context;
 	
-	private EditText parameterText;
+	private String oldText;
+	
+	private EditText inputText;
 	
 	private View inputTextDialogView;
 	
 	private AlertDialog inputTextDialog;
 	
-	private String parameter;
+	private String textValue;
 	
-	public ReadOtherParameterDialog(Context context) {
+	private int type;
+	
+	public ChangeParameterDialog(Context context, int type, String oldText) {
 		this.context = context;
+		this.type = type;
+		this.oldText = oldText;
 		
 		// Setup the layout.
 		setupLayout();
 	}
 
+
 	/**
 	 * Displays the input text dialog.
 	 */
 	public void show() {
-		// Reset the dialog values.
-		parameter = null;
+		// Reset the value.
+		textValue = null;
 		createDialog();
 		inputTextDialog.show();
 	}
@@ -62,8 +82,8 @@ public class ReadOtherParameterDialog {
 	 * @return The input text dialog value, {@code null} if dialog was
 	 *         cancelled or no text was entered.
 	 */
-	public String getParameter() {
-		return parameter;
+	public String getTextValue() {
+		return textValue;
 	}
 	
 	/**
@@ -73,9 +93,43 @@ public class ReadOtherParameterDialog {
 	private void setupLayout() {
 		// Create the layout.
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
-		inputTextDialogView = layoutInflater.inflate(R.layout.read_other_param_dialog, null);
-		// Configure the input texts.
-		parameterText = (EditText) inputTextDialogView.findViewById(R.id.param_text);
+		switch (type) {
+			case TYPE_TEXT:
+				inputTextDialogView = layoutInflater.inflate(R.layout.change_text_param_dialog, null);
+				break;
+			case TYPE_NUMERIC:
+				inputTextDialogView = layoutInflater.inflate(R.layout.change_numeric_param_dialog, null);
+				break;
+			case TYPE_HEXADECIMAL:
+				inputTextDialogView = layoutInflater.inflate(R.layout.change_hexadecimal_param_dialog, null);
+				break;
+			default:
+				break;
+		}
+		// Configure the input text.
+		inputText = (EditText) inputTextDialogView.findViewById(R.id.input_text);
+		if (oldText != null)
+			inputText.setText(oldText);
+
+		inputText.addTextChangedListener(new TextValidator(inputText) {
+			@Override
+			public void validate(EditText textView, String text) {
+				if (text.length() == 0) {
+					inputText.setError(ERROR_VALUE_EMPTY);
+					inputTextDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+					return;
+				}
+
+				if (type == TYPE_HEXADECIMAL && !Pattern.matches(HEXADECIMAL_PATTERN, text)) {
+					inputText.setError(ERROR_INVALID_HEX_VALUE);
+					inputTextDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+					return;
+				}
+
+				inputText.setError(null);
+				inputTextDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+			}
+		});
 	}
 	
 	/**
@@ -85,14 +139,14 @@ public class ReadOtherParameterDialog {
 		// Setup the dialog window.
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		alertDialogBuilder.setView(inputTextDialogView);
-		alertDialogBuilder.setTitle(R.string.read_dialog_title);
+		alertDialogBuilder.setTitle(R.string.edit_dialog_title);
 		alertDialogBuilder.setCancelable(false);
 		alertDialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
-				parameter = parameterText.getText().toString();
-				synchronized (ReadOtherParameterDialog.this) {
-					ReadOtherParameterDialog.this.notify();
+				textValue = inputText.getText().toString();
+				synchronized (ChangeParameterDialog.this) {
+					ChangeParameterDialog.this.notify();
 				}
 			}
 		});
@@ -100,8 +154,8 @@ public class ReadOtherParameterDialog {
 			@Override
 			public void onClick(DialogInterface dialog,	int id) {
 				dialog.cancel();
-				synchronized (ReadOtherParameterDialog.this) {
-					ReadOtherParameterDialog.this.notify();
+				synchronized (ChangeParameterDialog.this) {
+					ChangeParameterDialog.this.notify();
 				}
 			}
 		});

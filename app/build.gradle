@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.1.0'
+    compileSdkVersion 22
+    buildToolsVersion '23.0.2'
     defaultConfig {
-        applicationId "com.digi.android.xbeemanager"
-        minSdkVersion 19
-        targetSdkVersion 19
+        applicationId "com.digi.android.sample.xbeemanager"
+        minSdkVersion 22
+        targetSdkVersion 22
     }
     buildTypes {
         release {
@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:support-v4:22.2.1'
     compile files('libs/slf4j-api-1.7.7.jar')
     compile files('libs/XBeeJavaLibrary.jar')
 }

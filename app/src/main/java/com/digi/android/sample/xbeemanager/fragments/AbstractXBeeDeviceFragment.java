@@ -14,11 +14,11 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.fragments;
+package com.digi.android.sample.xbeemanager.fragments;
 
 import android.support.v4.app.Fragment;
 
-import com.digi.android.xbeemanager.managers.XBeeManager;
+import com.digi.android.sample.xbeemanager.managers.XBeeManager;
 
 public abstract class AbstractXBeeDeviceFragment extends Fragment {
 	

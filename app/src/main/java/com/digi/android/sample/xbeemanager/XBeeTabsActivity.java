@@ -14,15 +14,15 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager;
+package com.digi.android.sample.xbeemanager;
 
 import java.util.ArrayList;
 
-import com.digi.android.xbeemanager.fragments.AbstractXBeeDeviceFragment;
-import com.digi.android.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
-import com.digi.android.xbeemanager.fragments.XBeeDeviceInfoFragment;
-import com.digi.android.xbeemanager.fragments.XBeeReceivedPacketsFragment;
-import com.digi.android.xbeemanager.managers.XBeeManager;
+import com.digi.android.sample.xbeemanager.fragments.AbstractXBeeDeviceFragment;
+import com.digi.android.sample.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
+import com.digi.android.sample.xbeemanager.fragments.XBeeDeviceInfoFragment;
+import com.digi.android.sample.xbeemanager.fragments.XBeeReceivedPacketsFragment;
+import com.digi.android.sample.xbeemanager.managers.XBeeManager;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;

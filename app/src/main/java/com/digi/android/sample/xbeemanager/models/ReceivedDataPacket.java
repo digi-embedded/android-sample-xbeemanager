@@ -1,4 +1,4 @@
-package com.digi.android.xbeemanager.models;
+package com.digi.android.sample.xbeemanager.models;
 
 import com.digi.xbee.api.models.XBee64BitAddress;
 

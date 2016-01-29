@@ -1,4 +1,4 @@
-package com.digi.android.xbeemanager.models;
+package com.digi.android.sample.xbeemanager.models;
 
 import java.util.Calendar;
 import java.util.Date;

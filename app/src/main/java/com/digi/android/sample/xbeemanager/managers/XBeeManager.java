@@ -14,13 +14,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.managers;
+package com.digi.android.sample.xbeemanager.managers;
 
 import java.util.HashMap;
 
 import android.content.Context;
 
-import com.digi.android.xbeemanager.XBeeConstants;
+import com.digi.android.sample.xbeemanager.XBeeConstants;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;

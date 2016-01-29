@@ -14,20 +14,20 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.fragments;
+package com.digi.android.sample.xbeemanager.fragments;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.digi.android.xbeemanager.R;
-import com.digi.android.xbeemanager.XBeeConstants;
-import com.digi.android.xbeemanager.dialogs.ChangeOtherParameterDialog;
-import com.digi.android.xbeemanager.dialogs.ChangeParameterDialog;
-import com.digi.android.xbeemanager.dialogs.ReadOtherParameterDialog;
-import com.digi.android.xbeemanager.dialogs.SendDataDialog;
-import com.digi.android.xbeemanager.internal.RemoteXBeeDevicesAdapter;
-import com.digi.android.xbeemanager.managers.XBeeManager;
+import com.digi.android.sample.xbeemanager.R;
+import com.digi.android.sample.xbeemanager.XBeeConstants;
+import com.digi.android.sample.xbeemanager.dialogs.ChangeOtherParameterDialog;
+import com.digi.android.sample.xbeemanager.dialogs.ChangeParameterDialog;
+import com.digi.android.sample.xbeemanager.dialogs.ReadOtherParameterDialog;
+import com.digi.android.sample.xbeemanager.dialogs.SendDataDialog;
+import com.digi.android.sample.xbeemanager.internal.RemoteXBeeDevicesAdapter;
+import com.digi.android.sample.xbeemanager.managers.XBeeManager;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.listeners.IDiscoveryListener;

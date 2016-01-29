@@ -14,12 +14,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.xbeemanager.internal;
+package com.digi.android.sample.xbeemanager.internal;
 
 import java.util.ArrayList;
 
-import com.digi.android.xbeemanager.R;
-import com.digi.android.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
+import com.digi.android.sample.xbeemanager.R;
+import com.digi.android.sample.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.utils.ByteUtils;
 
