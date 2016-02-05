@@ -17,7 +17,7 @@
 package com.digi.android.sample.xbeemanager;
 
 import com.digi.android.sample.xbeemanager.managers.XBeeManager;
-import com.digi.xbee.api.connection.serial.SerialPortRxTxAndroid;
+import com.digi.android.serial.SerialPortManager;
 import com.digi.xbee.api.exceptions.XBeeException;
 
 import android.app.Activity;
@@ -216,7 +216,8 @@ public class XBeeConnectActivity extends Activity {
 		String[] serialPorts;
 		ArrayAdapter<String> serialPortsAdapter;
 		try {
-			serialPorts = SerialPortRxTxAndroid.listSerialPorts();
+			SerialPortManager serialPortManager = new SerialPortManager(this);
+			serialPorts = serialPortManager.listSerialPorts();
 			if (serialPorts == null || serialPorts.length == 0) {
 				serialPorts = new String[] {getResources().getString(R.string.no_ports_available)};
 				useSerialButton.setEnabled(false);

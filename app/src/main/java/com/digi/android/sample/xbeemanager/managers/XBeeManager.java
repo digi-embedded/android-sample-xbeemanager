@@ -77,7 +77,7 @@ public class XBeeManager {
 	public void createXBeeDevice(String port, int baudRate) {
 		this.port = port;
 		this.baudRate = baudRate;
-		localDevice = new XBeeDevice(port, baudRate);
+		localDevice = new XBeeDevice(context, port, baudRate);
 	}
 	
 	/**
