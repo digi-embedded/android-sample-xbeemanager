@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.2.1'
-    compile files('libs/slf4j-api-1.7.7.jar')
-    compile files('libs/XBeeJavaLibrary.jar')
+    implementation 'com.android.support:support-v4:22.2.1'
+    implementation files('libs/slf4j-api-1.7.7.jar')
+    implementation files('libs/XBeeJavaLibrary.jar')
 }
