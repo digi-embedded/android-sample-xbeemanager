@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -45,7 +45,7 @@ public class XBeeConnectActivity extends Activity {
 	private static final int ACTION_HIDE_PROGRESS_DIALOG = 3;
 	private static final int ACTION_ENABLE_CONNECT_BUTTON = 4;
 	private static final int ACTION_DISABLE_CONNECT_BUTTON = 5;
-	
+
 	// Variables.
 	private RadioButton useUSBHostButton;
 	private RadioButton useSerialButton;
@@ -62,14 +62,14 @@ public class XBeeConnectActivity extends Activity {
 	
 	private XBeeManager xbeeManager;
 
-	private IncomingHandler handler = new IncomingHandler(this);
+	private final IncomingHandler handler = new IncomingHandler(this);
 
 	// Handler used to perform actions in the UI thread.
 	static class IncomingHandler extends Handler {
 		private final WeakReference<XBeeConnectActivity> wActivity;
 
 		IncomingHandler(XBeeConnectActivity activity) {
-			wActivity = new WeakReference<XBeeConnectActivity>(activity);
+			wActivity = new WeakReference<>(activity);
 	}
 
 		@Override
@@ -108,31 +108,31 @@ public class XBeeConnectActivity extends Activity {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xbee_connect_activity);
-		
+
 		// Retrieve the application's XBee Manager.
 		xbeeManager = XBeeManagerApplication.getInstance().getXBeeManager();
-		
+
 		// Initialize UI Components.
 		initializeUIComponents();
-		
+
 		// Fill Serial Ports
 		fillSerialPorts();
-		
+
 		// Fill Baud Rates
 		fillBaudRates();
 	}
-	
+
 	/**
 	 * Initializes all the required UI components and sets the corresponding
 	 * listeners.
 	 */
 	private void initializeUIComponents() {
-		useUSBHostButton = (RadioButton)findViewById(R.id.usb_host_button);
+		useUSBHostButton =  findViewById(R.id.usb_host_button);
 		useUSBHostButton.setChecked(true);
 		useUSBHostButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -140,7 +140,7 @@ public class XBeeConnectActivity extends Activity {
 				handleUseUSBHostButtonPressed();
 			}
 		});
-		useSerialButton = (RadioButton)findViewById(R.id.usb_serial_button);
+		useSerialButton = findViewById(R.id.usb_serial_button);
 		useSerialButton.setChecked(false);
 		useSerialButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -148,20 +148,20 @@ public class XBeeConnectActivity extends Activity {
 				handleUseSerialButtonPressed();
 			}
 		});
-		serialPortSpinner = (Spinner)findViewById(R.id.serial_port_spinner);
+		serialPortSpinner = findViewById(R.id.serial_port_spinner);
 		serialPortSpinner.setEnabled(false);
-		baudRateSpinner = (Spinner)findViewById(R.id.baud_rate_spinner);
-		connectButton = (Button)findViewById(R.id.connect_button);
+		baudRateSpinner = findViewById(R.id.baud_rate_spinner);
+		connectButton = findViewById(R.id.connect_button);
 		connectButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleConnectButtonPressed();
 			}
 		});
-		errorText = (TextView)findViewById(R.id.error_text);
-		serialPortLabel = (TextView)findViewById(R.id.serial_port_label);
+		errorText = findViewById(R.id.error_text);
+		serialPortLabel = findViewById(R.id.serial_port_label);
 	}
-	
+
 	/**
 	 * Handles what happens when the use USB Host interface button is pressed.
 	 */
@@ -169,7 +169,7 @@ public class XBeeConnectActivity extends Activity {
 		enableSerialPortSpinner(false);
 		useSerialButton.setChecked(false);
 	}
-	
+
 	/**
 	 * Handles what happens when the use Serial interface button is pressed.
 	 */
@@ -177,13 +177,13 @@ public class XBeeConnectActivity extends Activity {
 		enableSerialPortSpinner(true);
 		useUSBHostButton.setChecked(false);
 	}
-	
+
 	/**
 	 * Handles what happens when the connect button is pressed.
 	 */
 	private void handleConnectButtonPressed() {
 		// Configure the XBee Manager.
-		int baudRate = Integer.valueOf(baudRateSpinner.getSelectedItem().toString());
+		int baudRate = Integer.parseInt(baudRateSpinner.getSelectedItem().toString());
 		if (useUSBHostButton.isChecked())
 			xbeeManager.createXBeeDevice(baudRate);
 		else
@@ -208,7 +208,7 @@ public class XBeeConnectActivity extends Activity {
 		});
 		connectThread.start();
 	}
-	
+
 	/**
 	 * Fills the serial port spinner list.
 	 */
@@ -226,22 +226,22 @@ public class XBeeConnectActivity extends Activity {
 			serialPorts = new String[] {getResources().getString(R.string.no_ports_available)};
 			useSerialButton.setEnabled(false);
 		}
-		serialPortsAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item);
+		serialPortsAdapter = new ArrayAdapter<>(this, R.layout.spinner_item);
 		serialPortsAdapter.addAll(serialPorts);
 		serialPortSpinner.setAdapter(serialPortsAdapter);
 		enableSerialPortSpinner(false);
 	}
-	
+
 	/**
 	 * Fills the baud rate spinner list.
 	 */
 	private void fillBaudRates() {
-		ArrayAdapter<String> baudRatesAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item);
+		ArrayAdapter<String> baudRatesAdapter = new ArrayAdapter<>(this, R.layout.spinner_item);
 		baudRatesAdapter.addAll(getResources().getStringArray(R.array.baud_rates));
 		baudRateSpinner.setAdapter(baudRatesAdapter);
 		baudRateSpinner.setSelection(3);
 	}
-	
+
 	/**
 	 * Changes the enablement state of the serial port spinner.
 	 * 
@@ -255,42 +255,42 @@ public class XBeeConnectActivity extends Activity {
 		else if (serialPortLabel != null)
 			serialPortLabel.setTextColor(getResources().getColor(R.color.disabled_gray));
 	}
-	
+
 	/**
 	 * Displays a 'Connecting...' progress dialog.
 	 */
 	private void showProgressDialog() {
 		handler.sendEmptyMessage(ACTION_SHOW_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Hides the progress dialog it is is open.
 	 */
 	private void hideProgressDialog() {
 		handler.sendEmptyMessage(ACTION_HIDE_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Removes the error message.
 	 */
 	private void clearErrorMessage() {
 		handler.sendEmptyMessage(ACTION_CLEAR_ERROR_MESSAGE);
 	}
-	
+
 	/**
 	 * Enables the connect button.
 	 */
 	private void enableConnectButton() {
 		handler.sendEmptyMessage(ACTION_ENABLE_CONNECT_BUTTON);
 	}
-	
+
 	/**
 	 * Disables the connect button.
 	 */
 	private void disableConnectButton() {
 		handler.sendEmptyMessage(ACTION_DISABLE_CONNECT_BUTTON);
 	}
-	
+
 	/**
 	 * Sets the given error message in the activity.
 	 * 

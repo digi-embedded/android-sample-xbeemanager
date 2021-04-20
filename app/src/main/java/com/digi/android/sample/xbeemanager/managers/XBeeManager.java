@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -33,19 +33,19 @@ import com.digi.xbee.api.utils.ByteUtils;
 import com.digi.xbee.api.utils.HexUtils;
 
 public class XBeeManager {
-	
+
 	// Constants.
 	private final static String USB_HOST_API = "USB Host API";
-	
+
 	// Variables.
 	private String port;
-	
+
 	private int baudRate;
-	
+
 	private XBeeDevice localDevice;
-	
-	private Context context;
-	
+
+	private final Context context;
+
 	/**
 	 * Class constructor. Instances a new {@code XBeeManager} object with the
 	 * given parameters.
@@ -55,7 +55,7 @@ public class XBeeManager {
 	public XBeeManager(Context context) {
 		this.context = context;
 	}
-	
+
 	/**
 	 * Creates the local XBee Device using the Android USB Host API with the
 	 * given baud rate.
@@ -67,7 +67,7 @@ public class XBeeManager {
 		this.port = null;
 		localDevice = new XBeeDevice(context, baudRate);
 	}
-	
+
 	/**
 	 * Creates the local XBee Device using the given serial port and baud rate.
 	 * 
@@ -79,7 +79,7 @@ public class XBeeManager {
 		this.baudRate = baudRate;
 		localDevice = new XBeeDevice(context, port, baudRate);
 	}
-	
+
 	/**
 	 * Returns the local XBee device.
 	 * 
@@ -88,7 +88,7 @@ public class XBeeManager {
 	public XBeeDevice getLocalXBeeDevice() {
 		return localDevice;
 	}
-	
+
 	/**
 	 * Returns the port used for the XBee device connection.
 	 * 
@@ -97,7 +97,7 @@ public class XBeeManager {
 	public String getSerialPort() {
 		return port;
 	}
-	
+
 	/**
 	 * Returns the baud rate used for the XBee device connection.
 	 * 
@@ -106,7 +106,7 @@ public class XBeeManager {
 	public int getBaudRate() {
 		return baudRate;
 	}
-	
+
 	/**
 	 * Sets the given parameter to the given value in the local device.
 	 * 
@@ -119,7 +119,7 @@ public class XBeeManager {
 	public void setLocalParameter(String parameter, byte[] value) throws XBeeException {
 		localDevice.setParameter(parameter, value);
 	}
-	
+
 	/**
 	 * Reads the given parameter from the local device.
 	 * 
@@ -134,7 +134,7 @@ public class XBeeManager {
 		byte[] value = localDevice.getParameter(parameter);
 		return HexUtils.byteArrayToHexString(value);
 	}
-	
+
 	/**
 	 * Returns a map with the basic read parameters of the local device.
 	 * 
@@ -144,7 +144,7 @@ public class XBeeManager {
 	 */
 	public HashMap<String, String> readBasicLocalParameters() throws XBeeException {
 		localDevice.readDeviceInfo();
-		HashMap<String, String> readParams = new HashMap<String, String>();
+		HashMap<String, String> readParams = new HashMap<>();
 		readParams.put(XBeeConstants.PARAM_NODE_IDENTIFIER, localDevice.getNodeID());
 		readParams.put(XBeeConstants.PARAM_MAC_ADDRESS, localDevice.get64BitAddress().toString());
 		readParams.put(XBeeConstants.PARAM_FIRMWARE_VERSION, localDevice.getFirmwareVersion());
@@ -166,7 +166,7 @@ public class XBeeManager {
 		readParams.put(XBeeConstants.PARAM_BAUD_RATE, "" + baudRate);
 		return readParams;
 	}
-	
+
 	/**
 	 * Returns a map with the basic read parameters of the given remote device.
 	 * 
@@ -179,7 +179,7 @@ public class XBeeManager {
 	 */
 	public HashMap<String, String> readBasicRemoteParameters(RemoteXBeeDevice remoteDevice) throws XBeeException {
 		remoteDevice.readDeviceInfo();
-		HashMap<String, String> readParams = new HashMap<String, String>();
+		HashMap<String, String> readParams = new HashMap<>();
 		readParams.put(XBeeConstants.PARAM_NODE_IDENTIFIER, remoteDevice.getNodeID());
 		readParams.put(XBeeConstants.PARAM_MAC_ADDRESS, remoteDevice.get64BitAddress().toString());
 		readParams.put(XBeeConstants.PARAM_FIRMWARE_VERSION, remoteDevice.getFirmwareVersion());
@@ -187,7 +187,7 @@ public class XBeeManager {
 		readParams.put(XBeeConstants.PARAM_XBEE_PROTOCOL, remoteDevice.getXBeeProtocol().toString());
 		return readParams;
 	}
-	
+
 	/**
 	 * Sends the given data to the given remote device.
 	 * 
@@ -200,7 +200,7 @@ public class XBeeManager {
 	public void sendDataToRemote(byte[] data, RemoteXBeeDevice remoteDevice) throws XBeeException {
 		localDevice.sendData(remoteDevice, data);
 	}
-	
+
 	/**
 	 * Retrieves the local XBee device 64-bit address.
 	 * 
@@ -209,7 +209,7 @@ public class XBeeManager {
 	public XBee64BitAddress getLocalXBee64BitAddress() {
 		return localDevice.get64BitAddress();
 	}
-	
+
 	/**
 	 * Adds the given listener to the list of listeners that will be notified
 	 * on device discovery events.
@@ -219,14 +219,14 @@ public class XBeeManager {
 	public void addDiscoveryListener(IDiscoveryListener listener) {
 		localDevice.getNetwork().addDiscoveryListener(listener);
 	}
-	
+
 	/**
 	 * Starts the device discovery process.
 	 */
 	public void startDiscoveryProcess() {
 		localDevice.getNetwork().startDiscoveryProcess();
 	}
-	
+
 	/**
 	 * Returns whether the device discovery process is running or not.
 	 * 
@@ -236,7 +236,7 @@ public class XBeeManager {
 	public boolean isDiscoveryRunning() {
 		return localDevice.getNetwork().isDiscoveryRunning();
 	}
-	
+
 	/**
 	 * Saves changes to flash.
 	 * 
@@ -246,7 +246,7 @@ public class XBeeManager {
 	public void saveChanges() throws XBeeException {
 		localDevice.writeChanges();
 	}
-	
+
 	/**
 	 * Subscribes the given listener to the list of listeners that will be
 	 * notified when XBee data packets are received.
@@ -256,7 +256,7 @@ public class XBeeManager {
 	public void subscribeDataPacketListener(IDataReceiveListener listener) {
 		localDevice.addDataListener(listener);
 	}
-	
+
 	/**
 	 * Unsubscribes the given listener from the list of data packet listeners.
 	 * 
@@ -265,7 +265,7 @@ public class XBeeManager {
 	public void unsubscribeDataPacketListener(IDataReceiveListener listener) {
 		localDevice.removeDataListener(listener);
 	}
-	
+
 	/**
 	 * Subscribes the given listener to the list of listeners that will be
 	 * notified when XBee IO packets are received.
@@ -275,7 +275,7 @@ public class XBeeManager {
 	public void subscribeIOPacketListener(IIOSampleReceiveListener listener) {
 		localDevice.addIOSampleListener(listener);
 	}
-	
+
 	/**
 	 * Unsubscribes the given listener from the list of IO packet listeners.
 	 * 
@@ -284,7 +284,7 @@ public class XBeeManager {
 	public void unsubscribeIOPacketListener(IIOSampleReceiveListener listener) {
 		localDevice.removeIOSampleListener(listener);
 	}
-	
+
 	/**
 	 * Subscribes the given listener to the list of listeners that will be
 	 * notified when Modem Status events are received.
@@ -294,7 +294,7 @@ public class XBeeManager {
 	public void subscribeModemStatusPacketListener(IModemStatusReceiveListener listener) {
 		localDevice.addModemStatusListener(listener);
 	}
-	
+
 	/**
 	 * Unsubscribes the given listener from the list of Modem Status packet
 	 * listeners.
@@ -304,7 +304,7 @@ public class XBeeManager {
 	public void unsubscribeModemStatusPacketListener(IModemStatusReceiveListener listener) {
 		localDevice.removeModemStatusListener(listener);
 	}
-	
+
 	/**
 	 * Attempts to open the local XBee Device connection.
 	 * 
@@ -314,7 +314,7 @@ public class XBeeManager {
 		if (!localDevice.isOpen())
 			localDevice.open();
 	}
-	
+
 	/**
 	 * Attempts to close the local XBee Device connection.
 	 */

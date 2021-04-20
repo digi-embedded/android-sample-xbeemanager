@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -18,6 +18,7 @@ package com.digi.android.sample.xbeemanager.fragments;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.digi.android.sample.xbeemanager.R;
 import com.digi.android.sample.xbeemanager.internal.ReceivedXBeePacketsAdapter;
@@ -59,10 +60,10 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 	private TextView typeText;
 	private TextView sourceAddressText;
 	private TextView packetDataText;
-	
+
 	private final Object receivedPacketsLock = new Object();
 
-	private IncomingHandler handler = new IncomingHandler(this);
+	private final IncomingHandler handler = new IncomingHandler(this);
 
 	// Handler used to perform actions in the UI thread.
 	static class IncomingHandler extends Handler {
@@ -70,7 +71,7 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 		private final WeakReference<XBeeReceivedPacketsFragment> wActivity;
 
 		IncomingHandler(XBeeReceivedPacketsFragment activity) {
-			wActivity = new WeakReference<XBeeReceivedPacketsFragment>(activity);
+			wActivity = new WeakReference<>(activity);
 		}
 
 		@Override
@@ -114,25 +115,26 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 			}
 		}
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+
 		// Inflate the layout for this fragment.
 		View view = inflater.inflate(R.layout.xbee_received_data, container, false);
-		
+
 		// Check if we have to initialize the received packets variables.
 		if (receivedPackets == null) {
-			receivedPackets = new ArrayList<AbstractReceivedPacket>();
-			receivedPacketsAdapter = new ReceivedXBeePacketsAdapter(getActivity(), receivedPackets);
+			receivedPackets = new ArrayList<>();
+			receivedPacketsAdapter = new ReceivedXBeePacketsAdapter(
+					Objects.requireNonNull(getActivity()), receivedPackets);
 		}
-		
+
 		// Initialize all required UI elements.
 		initializeUIElements(view);
-		
+
 		// Render initial remote devices list.
 		updateListView();
-		
+
 		return view;
 	}
 
@@ -185,7 +187,7 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 	public void updateListView() {
 		handler.sendEmptyMessage(ACTION_UPDATE_LIST_VIEW);
 	}
-	
+
 	/**
 	 * Initializes all the required graphic elements of this fragment. 
 	 * 
@@ -193,7 +195,7 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 	 */
 	private void initializeUIElements(View view) {
 		// XBee packet list.
-        ListView receivedPacketsList = (ListView)view.findViewById(R.id.received_packets_list);
+		ListView receivedPacketsList = view.findViewById(R.id.received_packets_list);
 		receivedPacketsList.setAdapter(receivedPacketsAdapter);
 		receivedPacketsList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -206,7 +208,7 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 		});
 
 		// Buttons.
-        Button clearButton = (Button)view.findViewById(R.id.clear_button);
+		Button clearButton = view.findViewById(R.id.clear_button);
 		clearButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -215,11 +217,11 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 		});
 
 		// Texts.
-		receivedPacketsText = (TextView)view.findViewById(R.id.received_packets_text);
-		dateText = (TextView)view.findViewById(R.id.date_text);
-		typeText = (TextView)view.findViewById(R.id.packet_type_text);
-		sourceAddressText = (TextView)view.findViewById(R.id.source_address_text);
-		packetDataText = (TextView)view.findViewById(R.id.packet_data_text);
+		receivedPacketsText = view.findViewById(R.id.received_packets_text);
+		dateText = view.findViewById(R.id.date_text);
+		typeText = view.findViewById(R.id.packet_type_text);
+		sourceAddressText = view.findViewById(R.id.source_address_text);
+		packetDataText = view.findViewById(R.id.packet_data_text);
 	}
 
 	/**
@@ -239,7 +241,7 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 		sourceAddressText.setText(selectedPacket.getSourceAddress().toString());
 		packetDataText.setText(selectedPacket.getPacketData());
 	}
-	
+
 	/**
 	 * Handles what happens when the clear button is pressed.
 	 */
@@ -251,14 +253,14 @@ public class XBeeReceivedPacketsFragment extends AbstractXBeeDeviceFragment
 		updateListView();
 		handlePacketSelected(null);
 	}
-	
+
 	/**
 	 * Clears the text values.
 	 */
 	private void clearValues() {
 		handler.sendEmptyMessage(ACTION_CLEAR_VALUES);
 	}
-	
+
 	/**
 	 * Adds the given packet to the list of packets.
 	 * 

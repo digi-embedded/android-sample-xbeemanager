@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -35,16 +35,16 @@ import android.widget.TextView;
 public class ReceivedXBeePacketsAdapter extends BaseAdapter {
 
 	public static final int NOTHING_SELECTED = -1;
-	
+
 	// Variables.
-	private ArrayList<AbstractReceivedPacket> receivedPackets;
-	
-	private LayoutInflater layoutInflater;
-	
-	private Context context;
-	
+	private final ArrayList<AbstractReceivedPacket> receivedPackets;
+
+	private final LayoutInflater layoutInflater;
+
+	private final Context context;
+
 	private int selectedItem = NOTHING_SELECTED;
-	
+
 	/**
 	 * Class constructor. Instantiates a new {@code RemoteXBeeDevicesAdapter}
 	 * object with the given parameters.
@@ -66,7 +66,7 @@ public class ReceivedXBeePacketsAdapter extends BaseAdapter {
 	public void setSelection(int position) {
 		selectedItem = position;
 	}
-	
+
 	/**
 	 * Retrieves the selected item position.
 	 * 
@@ -99,27 +99,27 @@ public class ReceivedXBeePacketsAdapter extends BaseAdapter {
 			view = layoutInflater.inflate(R.layout.received_frame_list_item, null);
 
 		// Find view fields.
-		RelativeLayout rootLayout = (RelativeLayout)view.findViewById(R.id.root_layout);
-		TextView dateText = (TextView)view.findViewById(R.id.date_text);
-		TextView typeText = (TextView)view.findViewById(R.id.packet_type_text);
-		TextView sourceAddressText = (TextView)view.findViewById(R.id.source_address_text);
-		TextView packetDataText = (TextView)view.findViewById(R.id.packet_data_text);
-		
+		RelativeLayout rootLayout = view.findViewById(R.id.root_layout);
+		TextView dateText = view.findViewById(R.id.date_text);
+		TextView typeText = view.findViewById(R.id.packet_type_text);
+		TextView sourceAddressText = view.findViewById(R.id.source_address_text);
+		TextView packetDataText = view.findViewById(R.id.packet_data_text);
+
 		// Retrieve selected packet.
 		final AbstractReceivedPacket receivedPacket = receivedPackets.get(position);
-		
+
 		// Set background.
 		if (position == selectedItem)
 			rootLayout.setBackgroundColor(context.getResources().getColor(R.color.light_yellow));
 		else
 			rootLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
-		
+
 		// Fill in all fields.
 		dateText.setText(receivedPacket.getTimeString());
 		typeText.setText(receivedPacket.getType().getName());
 		sourceAddressText.setText(receivedPacket.getSourceAddress().toString());
 		packetDataText.setText(receivedPacket.getShortPacketData());
-		
+
 		return view;
 	}
 }

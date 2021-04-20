@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -35,27 +35,27 @@ public class ChangeParameterDialog {
 	public final static int TYPE_TEXT = 0;
 	public final static int TYPE_NUMERIC = 1;
 	public final static int TYPE_HEXADECIMAL = 2;
-	
+
 	private final static String HEXADECIMAL_PATTERN = "[0-9a-fA-F]+";
 	
 	private final static String ERROR_VALUE_EMPTY = "Value cannot be empty.";
 	private final static String ERROR_INVALID_HEX_VALUE = "Invalid hexadecimal value.";
-	
+
 	// Variables.
-	private Context context;
-	
-	private String oldText;
-	
+	private final Context context;
+
+	private final String oldText;
+
 	private EditText inputText;
-	
+
 	private View inputTextDialogView;
-	
+
 	private AlertDialog inputTextDialog;
-	
+
 	private String textValue;
-	
-	private int type;
-	
+
+	private final int type;
+
 	public ChangeParameterDialog(Context context, int type, String oldText) {
 		this.context = context;
 		this.type = type;
@@ -64,7 +64,6 @@ public class ChangeParameterDialog {
 		// Setup the layout.
 		setupLayout();
 	}
-
 
 	/**
 	 * Displays the input text dialog.
@@ -85,7 +84,7 @@ public class ChangeParameterDialog {
 	public String getTextValue() {
 		return textValue;
 	}
-	
+
 	/**
 	 * Configures the layout of the input text dialog.
 	 */
@@ -107,7 +106,7 @@ public class ChangeParameterDialog {
 				break;
 		}
 		// Configure the input text.
-		inputText = (EditText) inputTextDialogView.findViewById(R.id.input_text);
+		inputText = inputTextDialogView.findViewById(R.id.input_text);
 		if (oldText != null)
 			inputText.setText(oldText);
 
@@ -131,7 +130,7 @@ public class ChangeParameterDialog {
 			}
 		});
 	}
-	
+
 	/**
 	 * Creates the alert dialog that will be displayed.
 	 */

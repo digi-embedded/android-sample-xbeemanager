@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -21,7 +21,7 @@ import android.support.v4.app.Fragment;
 import com.digi.android.sample.xbeemanager.managers.XBeeManager;
 
 public abstract class AbstractXBeeDeviceFragment extends Fragment {
-	
+
 	// Constants.
 	protected static final int ACTION_CLEAR_ERROR_MESSAGE = 0;
 	protected static final int ACTION_SET_ERROR_MESSAGE = 1;

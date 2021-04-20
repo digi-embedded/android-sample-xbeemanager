@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -36,22 +36,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 public class XBeeTabsActivity extends FragmentActivity {
-	
+
 	// Variables.
 	private ViewPager viewPager;
-    private XBeeManager xbeeManager;
-	
+	private XBeeManager xbeeManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xbee_tabs_activity);
-		
+
 		// Retrieve the XBee Manager.
 		xbeeManager = XBeeManagerApplication.getInstance().getXBeeManager();
-		
+
 		// Setup view pager.
 		setupViewPager();
-		
+
 		// Configure Action Bar.
 		configureTabs();
 	}
@@ -62,7 +62,7 @@ public class XBeeTabsActivity extends FragmentActivity {
 		// Disconnect the device.
 		xbeeManager.closeConnection();
 	}
-	
+
 	/**
 	 * Configures the view pager that will be used to display the different
 	 * activity fragments.
@@ -85,7 +85,7 @@ public class XBeeTabsActivity extends FragmentActivity {
 		XBeeDevicePagerAdapter xbeePagerAdapter = new XBeeDevicePagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(xbeePagerAdapter);
 	}
-	
+
 	/**
 	 * Configures the activity tabs of the action bar.
 	 */
@@ -108,12 +108,12 @@ public class XBeeTabsActivity extends FragmentActivity {
 		Tab framesTab = actionBar.newTab();
 		framesTab.setText(getResources().getString(R.string.frames_fragment_title));
 		framesTab.setTabListener(xbeeDeviceTabListener);
-		
+
 		actionBar.addTab(infoTab);
 		actionBar.addTab(discoverTab);
 		actionBar.addTab(framesTab);
 	}
-	
+
 	/**
 	 * Helper class used to handle the events of the different tab items.
 	 */
@@ -135,32 +135,26 @@ public class XBeeTabsActivity extends FragmentActivity {
 			// Do nothing.
 		}
 	}
-	
+
 	// Since this is an object collection, use a FragmentStatePagerAdapter,
 	// and NOT a FragmentPagerAdapter.
 	private class XBeeDevicePagerAdapter extends FragmentPagerAdapter {
-		
-		// Variables.
-		private AbstractXBeeDeviceFragment infoFragment;
-		private AbstractXBeeDeviceFragment discoverFragment;
-		private AbstractXBeeDeviceFragment framesFragment;
-		
-		private ArrayList<AbstractXBeeDeviceFragment> fragments;
-		
+		private final ArrayList<AbstractXBeeDeviceFragment> fragments;
+
 		public XBeeDevicePagerAdapter(FragmentManager fm) {
 			super(fm);
-			fragments = new ArrayList<AbstractXBeeDeviceFragment>();
+			fragments = new ArrayList<>();
 			// Create device information fragment.
-			infoFragment = new XBeeDeviceInfoFragment();
+			XBeeDeviceInfoFragment infoFragment = new XBeeDeviceInfoFragment();
 			infoFragment.setXBeeManager(xbeeManager);
-			((XBeeDeviceInfoFragment)infoFragment).setXBeeTabsActivity(XBeeTabsActivity.this);
+			infoFragment.setXBeeTabsActivity(XBeeTabsActivity.this);
 			fragments.add(infoFragment);
 			// Create device discovery fragment.
-			discoverFragment = new XBeeDeviceDiscoveryFragment();
+			XBeeDeviceDiscoveryFragment discoverFragment = new XBeeDeviceDiscoveryFragment();
 			discoverFragment.setXBeeManager(xbeeManager);
 			fragments.add(discoverFragment);
 			// Create received frames fragment.
-			framesFragment = new XBeeReceivedPacketsFragment();
+			AbstractXBeeDeviceFragment framesFragment = new XBeeReceivedPacketsFragment();
 			framesFragment.setXBeeManager(xbeeManager);
 			fragments.add(framesFragment);
 		}

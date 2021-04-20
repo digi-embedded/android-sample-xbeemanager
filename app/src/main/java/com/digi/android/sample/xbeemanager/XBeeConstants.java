@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -30,7 +30,7 @@ public class XBeeConstants {
 	public final static String PARAM_DEST_ADDRESS_L = "dest_address_l";
 	public final static String PARAM_NODE_DISCOVERY_TIME = "node_discovery_time";
 	public final static String PARAM_IO_SAMPLING_RATE = "io_sampling_rate";
-	
+
 	public final static String AT_COMMAND_NI = "NI";
 	public final static String AT_COMMAND_ID = "ID";
 	public final static String AT_COMMAND_DH = "DH";

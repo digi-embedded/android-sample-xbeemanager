@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,6 +19,8 @@ package com.digi.android.sample.xbeemanager.fragments;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Objects;
 
 import com.digi.android.sample.xbeemanager.R;
 import com.digi.android.sample.xbeemanager.XBeeConstants;
@@ -51,11 +53,11 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 
 	// Variables.
 	private ArrayList<RemoteXBeeDevice> remoteDevices;
-	
+
 	private RemoteXBeeDevicesAdapter remoteDevicesAdapter;
 	
 	private ListView remoteDevicesList;
-	
+
 	private Button discoverButton;
 	private Button clearButton;
 	private Button nodeIdentifierButton;
@@ -64,7 +66,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	private Button refreshButton;
 	private Button sendTextDataButton;
 	private Button sendHexDataButton;
-	
+
 	private TextView errorText;
 	private TextView nodeIdentifierText;
 	private TextView firmwareVersionText;
@@ -72,18 +74,18 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	private TextView xbeeProtocolText;
 	private TextView macAddressText;
 	private TextView remoteDevicesText;
-	
+
 	private ProgressDialog progressDialog;
-	
+
 	private final Object remoteDevicesLock = new Object();
-	private IncomingHandler handler = new IncomingHandler(this);
+	private final IncomingHandler handler = new IncomingHandler(this);
 
 	static class IncomingHandler extends Handler {
 
 		private final WeakReference<XBeeDeviceDiscoveryFragment> wActivity;
 
 		IncomingHandler(XBeeDeviceDiscoveryFragment activity) {
-			wActivity = new WeakReference<XBeeDeviceDiscoveryFragment>(activity);
+			wActivity = new WeakReference<>(activity);
 		}
 
 		@Override
@@ -145,7 +147,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 					break;
 				case ACTION_UPDATE_LIST_TEXT:
 					devDiscoveryFragment.remoteDevicesText.setText(
-							String.format("%d %s",
+							String.format(Locale.getDefault(), "%d %s",
 									devDiscoveryFragment.remoteDevices.size(),
 									devDiscoveryFragment.getResources().getString(R.string.remote_devices_found)));
 					break;
@@ -206,24 +208,24 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		super.setXBeeManager(manager);
 		manager.addDiscoveryListener(this);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.xbee_device_discovery, container, false);
-		
+
 		// Configure adapter.
 		if (remoteDevices == null) {
-			remoteDevices = new ArrayList<RemoteXBeeDevice>();
+			remoteDevices = new ArrayList<>();
 			remoteDevicesAdapter = new RemoteXBeeDevicesAdapter(this, remoteDevices);
 		}
-		
+
 		// Initialize all required UI elements.
 		initializeUIElements(view);
-		
+
 		// Render initial remote devices list.
 		updateListView();
-		
+
 		return view;
 	}
 
@@ -295,7 +297,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		};
 		readThread.start();
 	}
-	
+
 	/**
 	 * Initializes all the required graphic elements of this fragment. 
 	 * 
@@ -303,7 +305,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	 */
 	private void initializeUIElements(View view) {
 		// Devices List.
-		remoteDevicesList = (ListView)view.findViewById(R.id.remote_devices_list);
+		remoteDevicesList = view.findViewById(R.id.remote_devices_list);
 		remoteDevicesList.setAdapter(remoteDevicesAdapter);
 		remoteDevicesList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -314,62 +316,62 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		});
 
 		// Buttons.
-		discoverButton = (Button)view.findViewById(R.id.discover_button);
+		discoverButton = view.findViewById(R.id.discover_button);
 		discoverButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleDiscoverButtonPressed();
 			}
 		});
-		clearButton = (Button)view.findViewById(R.id.clear_button);
+		clearButton = view.findViewById(R.id.clear_button);
 		clearButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleClearButtonPressed();
 			}
 		});
-		refreshButton = (Button)view.findViewById(R.id.refresh_button);
+		refreshButton = view.findViewById(R.id.refresh_button);
 		refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleRefreshButtonPressed();
 			}
 		});
-		readOtherParameterButton = (Button)view.findViewById(R.id.read_other_param_button);
+		readOtherParameterButton = view.findViewById(R.id.read_other_param_button);
 		readOtherParameterButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleReadOtherParameterButtonPressed();
 			}
 		});
-		changeOtherParameterButton = (Button)view.findViewById(R.id.change_other_param_button);
+		changeOtherParameterButton = view.findViewById(R.id.change_other_param_button);
 		changeOtherParameterButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleChangeOtherParameterButtonPressed();
 			}
 		});
-		nodeIdentifierButton = (Button)view.findViewById(R.id.node_identifier_button);
+		nodeIdentifierButton = view.findViewById(R.id.node_identifier_button);
 		nodeIdentifierButton.setOnClickListener(parametersChangeButtonListener);
-		sendTextDataButton = (Button)view.findViewById(R.id.send_text_data_button);
+		sendTextDataButton = view.findViewById(R.id.send_text_data_button);
 		sendTextDataButton.setOnClickListener(sendDataButtonListener);
-		sendHexDataButton = (Button)view.findViewById(R.id.send_hex_data_button);
+		sendHexDataButton = view.findViewById(R.id.send_hex_data_button);
 		sendHexDataButton.setOnClickListener(sendDataButtonListener);
 
 		// Texts.
-		errorText = (TextView)view.findViewById(R.id.error_text);
-		nodeIdentifierText = (TextView)view.findViewById(R.id.node_identifier_text);
-		firmwareVersionText = (TextView)view.findViewById(R.id.firmware_text);
-		hardwareVersionText = (TextView)view.findViewById(R.id.hardware_text);
-		xbeeProtocolText = (TextView)view.findViewById(R.id.protocol_text);
-		macAddressText = (TextView)view.findViewById(R.id.mac_address_text);
-		remoteDevicesText = (TextView)view.findViewById(R.id.remote_devices_text);
+		errorText = view.findViewById(R.id.error_text);
+		nodeIdentifierText = view.findViewById(R.id.node_identifier_text);
+		firmwareVersionText = view.findViewById(R.id.firmware_text);
+		hardwareVersionText = view.findViewById(R.id.hardware_text);
+		xbeeProtocolText = view.findViewById(R.id.protocol_text);
+		macAddressText = view.findViewById(R.id.mac_address_text);
+		remoteDevicesText = view.findViewById(R.id.remote_devices_text);
 	}
-	
+
 	/**
 	 * Listener used to wait for clicks on the "Change..." parameter buttons.
 	 */
-	private OnClickListener parametersChangeButtonListener = new OnClickListener() {
+	private final OnClickListener parametersChangeButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			// Remove error message.
@@ -379,14 +381,10 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 			String oldValue = null;
 			String parameter = null;
 			int type = 0;
-			switch (v.getId()) {
-				case R.id.node_identifier_button:
-					parameter = XBeeConstants.PARAM_NODE_IDENTIFIER;
-					oldValue = nodeIdentifierText.getText().toString();
-					type = ChangeParameterDialog.TYPE_TEXT;
-					break;
-				default:
-					break;
+			if (v.getId() == R.id.node_identifier_button) {
+				parameter = XBeeConstants.PARAM_NODE_IDENTIFIER;
+				oldValue = nodeIdentifierText.getText().toString();
+				type = ChangeParameterDialog.TYPE_TEXT;
 			}
 
 			final String parameterFinal = parameter;
@@ -415,7 +413,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	/**
 	 * Listener used to wait for clicks on the Send Data buttons.
 	 */
-	private OnClickListener sendDataButtonListener = new OnClickListener() {
+	private final OnClickListener sendDataButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View view) {
 			// Remove error message.
@@ -423,15 +421,11 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 
 			// Initialize variables.
 			int type = 0;
-			switch (view.getId()) {
-				case R.id.send_text_data_button:
-					type = SendDataDialog.TYPE_TEXT;
-					break;
-				case R.id.send_hex_data_button:
-					type = SendDataDialog.TYPE_HEXADECIMAL;
-					break;
-				default:
-					break;
+			int id = view.getId();
+			if (id == R.id.send_text_data_button) {
+				type = SendDataDialog.TYPE_TEXT;
+			} else if (id == R.id.send_hex_data_button) {
+				type = SendDataDialog.TYPE_HEXADECIMAL;
 			}
 
 			final SendDataDialog sendDataDialog = new SendDataDialog(XBeeDeviceDiscoveryFragment.this.getActivity(), type);
@@ -456,7 +450,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 			waitThread.start();
 		}
 	};
-	
+
 	/**
 	 * Handles what happens when the discover button is pressed.
 	 */
@@ -479,7 +473,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		};
 		discoverThread.start();
 	}
-	
+
 	/**
 	 * Handles what happens when the clear button is pressed.
 	 */
@@ -491,21 +485,21 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		updateListView();
 		handleRemoteDeviceSelected(null);
 	}
-	
+
 	/**
 	 * Handles what happens when the refresh button is pressed.
 	 */
 	private void handleRefreshButtonPressed() {
 		handleRemoteDeviceSelected(getSelectedXBeeDevice());
 	}
-	
+
 	/**
 	 * Fills the page fields with the read device parameters.
 	 * 
 	 * @param parameters Read device parameters.
 	 */
 	private void fillRemoteDeviceParameters(final HashMap<String, String> parameters) {
-		getActivity().runOnUiThread(new Runnable() {
+		Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				firmwareVersionText.setText(parameters.get(XBeeConstants.PARAM_FIRMWARE_VERSION));
@@ -516,7 +510,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 			}
 		});
 	}
-	
+
 	/**
 	 * Handles what happens when the 'Read Other Parameter' button is pressed.
 	 */
@@ -554,7 +548,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		};
 		waitThread.start();
 	}
-	
+
 	/**
 	 * Handles what happens when the 'Change Other Parameter' button is pressed.
 	 */
@@ -596,7 +590,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		};
 		waitThread.start();
 	}
-	
+
 	/**
 	 * Sends the given data to the given remote device.
 	 * 
@@ -623,7 +617,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		});
 		sendThread.start();
 	}
-	
+
 	/**
 	 * Reads the given parameter from the local XBee Device.
 	 * 
@@ -649,7 +643,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		});
 		readThread.start();
 	}
-	
+
 	/**
 	 * Writes the given parameter to the local XBee Device.
 	 * 
@@ -684,7 +678,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		});
 		writeThread.start();
 	}
-	
+
 	/**
 	 * Returns the corresponding AT command for the given parameter.
 	 * 
@@ -698,7 +692,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		else
 			return parameter;
 	}
-	
+
 	/**
 	 * Calculates the real value to set for the given parameter.
 	 * 
@@ -719,7 +713,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Updates the given parameter to to the given value.
 	 * 
@@ -727,7 +721,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	 * @param value Parameter value.
 	 */
 	private void updateParameterValue(final String parameter, final String value) {
-		getActivity().runOnUiThread(new Runnable() {
+		Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				if (parameter.equals(XBeeConstants.PARAM_NODE_IDENTIFIER))
@@ -735,7 +729,7 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 			}
 		});
 	}
-	
+
 	/**
 	 * Displays a 'Reading...' progress dialog.
 	 */
@@ -749,70 +743,70 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 	private void showWriteProgressDialog() {
 		handler.sendEmptyMessage(ACTION_SHOW_WRITE_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Displays a 'Discovering...' progress dialog.
 	 */
 	private void showDiscoverProgressDialog() {
 		handler.sendEmptyMessage(ACTION_SHOW_DISCOVER_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Displays a 'Sending...' progress dialog.
 	 */
 	private void showSendProgressDialog() {
 		handler.sendEmptyMessage(ACTION_SHOW_SEND_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Hides the progress dialog it is is open.
 	 */
 	private void hideProgressDialog() {
 		handler.sendEmptyMessage(ACTION_HIDE_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Removes the error message.
 	 */
 	private void clearErrorMessage() {
 		handler.sendEmptyMessage(ACTION_CLEAR_ERROR_MESSAGE);
 	}
-	
+
 	/**
 	 * Enables the UI buttons.
 	 */
 	private void enableUIButtons() {
 		handler.sendEmptyMessage(ACTION_ENABLE_PARAMETERS_BUTTONS);
 	}
-	
+
 	/**
 	 * Disables the UI buttons.
 	 */
 	private void disableUIButtons() {
 		handler.sendEmptyMessage(ACTION_DISABLE_PARAMETERS_BUTTONS);
 	}
-	
+
 	/**
 	 * Clears the text values.
 	 */
 	private void clearValues() {
 		handler.sendEmptyMessage(ACTION_CLEAR_VALUES);
 	}
-	
+
 	/**
 	 * Enables the discover buttons.
 	 */
 	private void enableDiscoverButtons() {
 		handler.sendEmptyMessage(ACTION_ENABLE_DISCOVER_BUTTONS);
 	}
-	
+
 	/**
 	 * Disables the discover buttons.
 	 */
 	private void disableDiscoverButtons() {
 		handler.sendEmptyMessage(ACTION_DISABLE_DISCOVER_BUTTONS);
 	}
-	
+
 	/**
 	 * Sets the given error message in the activity.
 	 * 
@@ -825,14 +819,14 @@ public class XBeeDeviceDiscoveryFragment extends AbstractXBeeDeviceFragment impl
 		msg.obj = message;
 		handler.sendMessage(msg);
 	}
-	
+
 	/**
 	 * Updates the list view.
 	 */
 	public void updateListView() {
 		handler.sendEmptyMessage(ACTION_UPDATE_LIST_VIEW);
 	}
-	
+
 	/**
 	 * Sets the given error message in the activity.
 	 * 

@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,6 +17,7 @@
 package com.digi.android.sample.xbeemanager.internal;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.digi.android.sample.xbeemanager.R;
 import com.digi.android.sample.xbeemanager.fragments.XBeeDeviceDiscoveryFragment;
@@ -37,16 +38,16 @@ import android.widget.TextView;
 public class RemoteXBeeDevicesAdapter extends BaseAdapter {
 
 	public static final int NOTHING_SELECTED = -1;
-	
+
 	// Variables.
-	private ArrayList<RemoteXBeeDevice> remoteDevices;
-	
-	private LayoutInflater layoutInflater;
-	
-	private XBeeDeviceDiscoveryFragment deviceDiscoveryFragment;
-	
+	private final ArrayList<RemoteXBeeDevice> remoteDevices;
+
+	private final LayoutInflater layoutInflater;
+
+	private final XBeeDeviceDiscoveryFragment deviceDiscoveryFragment;
+
 	private int selectedItem = NOTHING_SELECTED;
-	
+
 	/**
 	 * Class constructor. Instantiates a new {@code RemoteXBeeDevicesAdapter}
 	 * object with the given parameters.
@@ -57,7 +58,8 @@ public class RemoteXBeeDevicesAdapter extends BaseAdapter {
 	public RemoteXBeeDevicesAdapter(XBeeDeviceDiscoveryFragment deviceDiscoveryFragment, ArrayList<RemoteXBeeDevice> remoteDevices) {
 		this.deviceDiscoveryFragment = deviceDiscoveryFragment;
 		this.remoteDevices = remoteDevices;
-		layoutInflater = (LayoutInflater)deviceDiscoveryFragment.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		layoutInflater = (LayoutInflater) Objects.requireNonNull(
+				deviceDiscoveryFragment.getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	/**
@@ -69,7 +71,7 @@ public class RemoteXBeeDevicesAdapter extends BaseAdapter {
 		selectedItem = position;
 		notifyDataSetChanged();
 	}
-	
+
 	/**
 	 * Retrieves the selected item position.
 	 * 
@@ -102,20 +104,20 @@ public class RemoteXBeeDevicesAdapter extends BaseAdapter {
 			view = layoutInflater.inflate(R.layout.remote_device_list_item, null);
 
 		// Find view fields.
-		TextView macAddressText = (TextView)view.findViewById(R.id.mac_address_text);
-		TextView nodeIdentifierText = (TextView)view.findViewById(R.id.node_identifier_text);
-		TextView address16Text = (TextView)view.findViewById(R.id.address_16_text);
-		ImageButton removeButton = (ImageButton)view.findViewById(R.id.remove_button);
-		
+		TextView macAddressText = view.findViewById(R.id.mac_address_text);
+		TextView nodeIdentifierText = view.findViewById(R.id.node_identifier_text);
+		TextView address16Text = view.findViewById(R.id.address_16_text);
+		ImageButton removeButton = view.findViewById(R.id.remove_button);
+
 		// Retrieve selected Remote Device.
 		final RemoteXBeeDevice remoteDevice = remoteDevices.get(position);
-		
+
 		// Set background.
 		if (position == selectedItem)
 			view.setBackgroundColor(deviceDiscoveryFragment.getResources().getColor(R.color.light_yellow));
 		else
 			view.setBackgroundColor(deviceDiscoveryFragment.getResources().getColor(R.color.white));
-		
+
 		// Fill in all fields.
 		macAddressText.setText(remoteDevice.get64BitAddress().toString());
 		nodeIdentifierText.setText(remoteDevice.getNodeID());
@@ -123,7 +125,7 @@ public class RemoteXBeeDevicesAdapter extends BaseAdapter {
 			address16Text.setText(remoteDevice.get16BitAddress().toString());
 		else
 			address16Text.setText("");
-		
+
 		// Add listener to the remove button.
 		removeButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -136,7 +138,7 @@ public class RemoteXBeeDevicesAdapter extends BaseAdapter {
 				}
 			}
 		});
-		
+
 		return view;
 	}
 }

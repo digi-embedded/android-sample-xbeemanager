@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -18,6 +18,7 @@ package com.digi.android.sample.xbeemanager.fragments;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Objects;
 
 import com.digi.android.sample.xbeemanager.R;
 import com.digi.android.sample.xbeemanager.XBeeConstants;
@@ -41,12 +42,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
-	
+
 	// Variables.
 	private XBeeTabsActivity xbeeTabsActivity;
 
 	private Button refreshButton;
-	
+
 	private TextView errorText;
 	private TextView serialPortText;
 	private TextView baudRateText;
@@ -60,10 +61,10 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	private TextView destAddressLowText;
 	private TextView nodeDiscoveryTimeText;
 	private TextView ioSamplingRateTimeText;
-	
+
 	private ProgressDialog progressDialog;
 
-	private IncomingHandler handler = new IncomingHandler(this);
+	private final IncomingHandler handler = new IncomingHandler(this);
 
 	// Handler used to perform actions in the UI thread.
 	static class IncomingHandler extends Handler {
@@ -71,7 +72,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		private final WeakReference<XBeeDeviceInfoFragment> wActivity;
 
 		IncomingHandler(XBeeDeviceInfoFragment activity) {
-			wActivity = new WeakReference<XBeeDeviceInfoFragment>(activity);
+			wActivity = new WeakReference<>(activity);
 		}
 
 		@Override
@@ -116,24 +117,24 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.xbee_device_info, container, false);
-		
+
 		// Initialize all required UI elements.
 		initializeUIElements(view);
-		
+
 		// Read all device parameters.
 		readDeviceParameters();
-		
+
 		return view;
 	}
 
@@ -159,7 +160,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	 */
 	private void initializeUIElements(View view) {
 		// Buttons.
-		Button disconnectButton = (Button)view.findViewById(R.id.disconnect_button);
+		Button disconnectButton = view.findViewById(R.id.disconnect_button);
 		disconnectButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -167,7 +168,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			}
 		});
 
-		refreshButton = (Button)view.findViewById(R.id.refresh_button);
+		refreshButton = view.findViewById(R.id.refresh_button);
 		refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -175,7 +176,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			}
 		});
 
-		Button readOtherParameterButton = (Button)view.findViewById(R.id.read_other_param_button);
+		Button readOtherParameterButton = view.findViewById(R.id.read_other_param_button);
 		readOtherParameterButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -183,7 +184,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			}
 		});
 
-		Button changeOtherParameterButton = (Button)view.findViewById(R.id.change_other_param_button);
+		Button changeOtherParameterButton = view.findViewById(R.id.change_other_param_button);
 		changeOtherParameterButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -192,39 +193,39 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		});
 
 		// Change parameters buttons.
-		Button nodeIdentifierButton = (Button)view.findViewById(R.id.node_identifier_button);
+		Button nodeIdentifierButton = view.findViewById(R.id.node_identifier_button);
 		nodeIdentifierButton.setOnClickListener(parametersChangeButtonListener);
-		Button panIDButton = (Button)view.findViewById(R.id.pan_id_button);
+		Button panIDButton = view.findViewById(R.id.pan_id_button);
 		panIDButton.setOnClickListener(parametersChangeButtonListener);
-		Button destAddressHighButton = (Button)view.findViewById(R.id.dest_address_high_button);
+		Button destAddressHighButton = view.findViewById(R.id.dest_address_high_button);
 		destAddressHighButton.setOnClickListener(parametersChangeButtonListener);
-		Button destAddressLowButton = (Button)view.findViewById(R.id.dest_address_low_button);
+		Button destAddressLowButton = view.findViewById(R.id.dest_address_low_button);
 		destAddressLowButton.setOnClickListener(parametersChangeButtonListener);
-		Button nodeDiscoveryTimeButton = (Button)view.findViewById(R.id.node_discovery_time_button);
+		Button nodeDiscoveryTimeButton = view.findViewById(R.id.node_discovery_time_button);
 		nodeDiscoveryTimeButton.setOnClickListener(parametersChangeButtonListener);
-		Button ioSamplingRateTimeTimeButton = (Button)view.findViewById(R.id.io_sampling_rate_button);
+		Button ioSamplingRateTimeTimeButton = view.findViewById(R.id.io_sampling_rate_button);
 		ioSamplingRateTimeTimeButton.setOnClickListener(parametersChangeButtonListener);
 
 		// Texts.
-		errorText = (TextView)view.findViewById(R.id.error_text);
-		serialPortText = (TextView)view.findViewById(R.id.port_text);
-		baudRateText = (TextView)view.findViewById(R.id.baud_rate_text);
-		firmwareVersionText = (TextView)view.findViewById(R.id.firmware_text);
-		hardwareVersionText = (TextView)view.findViewById(R.id.hardware_text);
-		protocolText = (TextView)view.findViewById(R.id.protocol_text);
-		macAddressText = (TextView)view.findViewById(R.id.mac_text);
-		nodeIdentifierText = (TextView)view.findViewById(R.id.node_identifier_text);
-		panIDText = (TextView)view.findViewById(R.id.pan_id_text);
-		destAddressHighText = (TextView)view.findViewById(R.id.dest_address_high_text);
-		destAddressLowText = (TextView)view.findViewById(R.id.dest_address_low_text);
-		nodeDiscoveryTimeText = (TextView)view.findViewById(R.id.node_discovery_time_text);
-		ioSamplingRateTimeText = (TextView)view.findViewById(R.id.io_sampling_rate_text);
+		errorText = view.findViewById(R.id.error_text);
+		serialPortText = view.findViewById(R.id.port_text);
+		baudRateText = view.findViewById(R.id.baud_rate_text);
+		firmwareVersionText = view.findViewById(R.id.firmware_text);
+		hardwareVersionText = view.findViewById(R.id.hardware_text);
+		protocolText = view.findViewById(R.id.protocol_text);
+		macAddressText = view.findViewById(R.id.mac_text);
+		nodeIdentifierText = view.findViewById(R.id.node_identifier_text);
+		panIDText = view.findViewById(R.id.pan_id_text);
+		destAddressHighText = view.findViewById(R.id.dest_address_high_text);
+		destAddressLowText = view.findViewById(R.id.dest_address_low_text);
+		nodeDiscoveryTimeText = view.findViewById(R.id.node_discovery_time_text);
+		ioSamplingRateTimeText = view.findViewById(R.id.io_sampling_rate_text);
 	}
-	
+
 	/**
 	 * Listener used to wait for clicks on the "Change..." parameter buttons.
 	 */
-	private OnClickListener parametersChangeButtonListener = new OnClickListener() {
+	private final OnClickListener parametersChangeButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			// Remove error message.
@@ -234,39 +235,31 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			String parameter = null;
 			int type = 0;
 
-			switch (v.getId()) {
-				case R.id.node_identifier_button:
-					parameter = XBeeConstants.PARAM_NODE_IDENTIFIER;
-					oldValue = nodeIdentifierText.getText().toString();
-					type = ChangeParameterDialog.TYPE_TEXT;
-					break;
-				case R.id.pan_id_button:
-					parameter = XBeeConstants.PARAM_PAN_ID;
-					oldValue = panIDText.getText().toString();
-					type = ChangeParameterDialog.TYPE_HEXADECIMAL;
-					break;
-				case R.id.dest_address_high_button:
-					parameter = XBeeConstants.PARAM_DEST_ADDRESS_H;
-					oldValue = destAddressHighText.getText().toString();
-					type = ChangeParameterDialog.TYPE_HEXADECIMAL;
-					break;
-				case R.id.dest_address_low_button:
-					parameter = XBeeConstants.PARAM_DEST_ADDRESS_L;
-					oldValue = destAddressLowText.getText().toString();
-					type = ChangeParameterDialog.TYPE_HEXADECIMAL;
-					break;
-				case R.id.node_discovery_time_button:
-					parameter = XBeeConstants.PARAM_NODE_DISCOVERY_TIME;
-					oldValue = nodeDiscoveryTimeText.getText().toString();
-					type = ChangeParameterDialog.TYPE_NUMERIC;
-					break;
-				case R.id.io_sampling_rate_button:
-					parameter = XBeeConstants.PARAM_IO_SAMPLING_RATE;
-					oldValue = ioSamplingRateTimeText.getText().toString();
-					type = ChangeParameterDialog.TYPE_NUMERIC;
-					break;
-				default:
-					break;
+			int id = v.getId();
+			if (id == R.id.node_identifier_button) {
+				parameter = XBeeConstants.PARAM_NODE_IDENTIFIER;
+				oldValue = nodeIdentifierText.getText().toString();
+				type = ChangeParameterDialog.TYPE_TEXT;
+			} else if (id == R.id.pan_id_button) {
+				parameter = XBeeConstants.PARAM_PAN_ID;
+				oldValue = panIDText.getText().toString();
+				type = ChangeParameterDialog.TYPE_HEXADECIMAL;
+			} else if (id == R.id.dest_address_high_button) {
+				parameter = XBeeConstants.PARAM_DEST_ADDRESS_H;
+				oldValue = destAddressHighText.getText().toString();
+				type = ChangeParameterDialog.TYPE_HEXADECIMAL;
+			} else if (id == R.id.dest_address_low_button) {
+				parameter = XBeeConstants.PARAM_DEST_ADDRESS_L;
+				oldValue = destAddressLowText.getText().toString();
+				type = ChangeParameterDialog.TYPE_HEXADECIMAL;
+			} else if (id == R.id.node_discovery_time_button) {
+				parameter = XBeeConstants.PARAM_NODE_DISCOVERY_TIME;
+				oldValue = nodeDiscoveryTimeText.getText().toString();
+				type = ChangeParameterDialog.TYPE_NUMERIC;
+			} else if (id == R.id.io_sampling_rate_button) {
+				parameter = XBeeConstants.PARAM_IO_SAMPLING_RATE;
+				oldValue = ioSamplingRateTimeText.getText().toString();
+				type = ChangeParameterDialog.TYPE_NUMERIC;
 			}
 
 			final String parameterFinal = parameter;
@@ -291,7 +284,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			waitThread.start();
 		}
 	};
-	
+
 	/**
 	 * Reads XBee device parameters and fills the page with the read values.
 	 */
@@ -314,7 +307,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 				hideProgressDialog();
 
 				// Enable refresh button.
-				getActivity().runOnUiThread(new Runnable() {
+				Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						refreshButton.setEnabled(true);
@@ -324,14 +317,14 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		});
 		readThread.start();
 	}
-	
+
 	/**
 	 * Fills the page fields with the read device parameters.
 	 * 
 	 * @param parameters Read device parameters.
 	 */
 	private void fillDeviceParameters(final HashMap<String, String> parameters) {
-		getActivity().runOnUiThread(new Runnable() {
+		Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				serialPortText.setText(parameters.get(XBeeConstants.PARAM_SERIAL_PORT));
@@ -349,7 +342,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 			}
 		});
 	}
-	
+
 	/**
 	 * Reads the given parameter from the local XBee Device.
 	 * 
@@ -373,7 +366,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		});
 		readThread.start();
 	}
-	
+
 	/**
 	 * Writes the given parameter to the local XBee Device.
 	 * 
@@ -406,7 +399,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		});
 		writeThread.start();
 	}
-	
+
 	/**
 	 * Returns the corresponding AT command for the given parameter.
 	 * 
@@ -415,22 +408,24 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	 * @return The parameter's AT command.
 	 */
 	private String calculateATParam(String parameter) {
-		if (parameter.equals(XBeeConstants.PARAM_NODE_IDENTIFIER))
-			return XBeeConstants.AT_COMMAND_NI;
-		if (parameter.equals(XBeeConstants.PARAM_PAN_ID))
-			return XBeeConstants.AT_COMMAND_ID;
-		if (parameter.equals(XBeeConstants.PARAM_DEST_ADDRESS_H))
-			return XBeeConstants.AT_COMMAND_DH;
-		if (parameter.equals(XBeeConstants.PARAM_DEST_ADDRESS_L))
-			return XBeeConstants.AT_COMMAND_DL;
-		else if (parameter.equals(XBeeConstants.PARAM_NODE_DISCOVERY_TIME))
-			return XBeeConstants.AT_COMMAND_NT;
-		else if (parameter.equals(XBeeConstants.PARAM_IO_SAMPLING_RATE))
-			return XBeeConstants.AT_COMMAND_IR;
-		else
-			return parameter;
+		switch (parameter) {
+			case XBeeConstants.PARAM_NODE_IDENTIFIER:
+				return XBeeConstants.AT_COMMAND_NI;
+			case XBeeConstants.PARAM_PAN_ID:
+				return XBeeConstants.AT_COMMAND_ID;
+			case XBeeConstants.PARAM_DEST_ADDRESS_H:
+				return XBeeConstants.AT_COMMAND_DH;
+			case XBeeConstants.PARAM_DEST_ADDRESS_L:
+				return XBeeConstants.AT_COMMAND_DL;
+			case XBeeConstants.PARAM_NODE_DISCOVERY_TIME:
+				return XBeeConstants.AT_COMMAND_NT;
+			case XBeeConstants.PARAM_IO_SAMPLING_RATE:
+				return XBeeConstants.AT_COMMAND_IR;
+			default:
+				return parameter;
+		}
 	}
-	
+
 	/**
 	 * Calculates the real value to set for the given parameter.
 	 * 
@@ -442,20 +437,26 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	private byte[] calculateParameterValue(String parameter, String newValue) {
 		byte[] value;
 		try {
-			if (parameter.equals(XBeeConstants.PARAM_NODE_DISCOVERY_TIME))
-				value = ByteUtils.longToByteArray((Long.parseLong(newValue)) / 100);
-			else if (parameter.equals(XBeeConstants.PARAM_IO_SAMPLING_RATE))
-				value = ByteUtils.longToByteArray(Long.parseLong(newValue));
-			else if (parameter.equals(XBeeConstants.PARAM_NODE_IDENTIFIER))
-				value = newValue.getBytes();
-			else
-				value = HexUtils.hexStringToByteArray(newValue);
+			switch (parameter) {
+				case XBeeConstants.PARAM_NODE_DISCOVERY_TIME:
+					value = ByteUtils.longToByteArray((Long.parseLong(newValue)) / 100);
+					break;
+				case XBeeConstants.PARAM_IO_SAMPLING_RATE:
+					value = ByteUtils.longToByteArray(Long.parseLong(newValue));
+					break;
+				case XBeeConstants.PARAM_NODE_IDENTIFIER:
+					value = newValue.getBytes();
+					break;
+				default:
+					value = HexUtils.hexStringToByteArray(newValue);
+					break;
+			}
 			return value;
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Updates the given parameter to to the given value.
 	 * 
@@ -463,32 +464,40 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	 * @param value Parameter value.
 	 */
 	private void updateParameterValue(final String parameter, final String value) {
-		getActivity().runOnUiThread(new Runnable() {
+		Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (parameter.equals(XBeeConstants.PARAM_NODE_IDENTIFIER))
-					nodeIdentifierText.setText(value);
-				else if (parameter.equals(XBeeConstants.PARAM_PAN_ID))
-					panIDText.setText(value);
-				else if (parameter.equals(XBeeConstants.PARAM_DEST_ADDRESS_H))
-					destAddressHighText.setText(value);
-				else if (parameter.equals(XBeeConstants.PARAM_DEST_ADDRESS_L))
-					destAddressLowText.setText(value);
-				else if (parameter.equals(XBeeConstants.PARAM_NODE_DISCOVERY_TIME))
-					nodeDiscoveryTimeText.setText(value);
-				else if (parameter.equals(XBeeConstants.PARAM_IO_SAMPLING_RATE))
-					ioSamplingRateTimeText.setText(value);
+				switch (parameter) {
+					case XBeeConstants.PARAM_NODE_IDENTIFIER:
+						nodeIdentifierText.setText(value);
+						break;
+					case XBeeConstants.PARAM_PAN_ID:
+						panIDText.setText(value);
+						break;
+					case XBeeConstants.PARAM_DEST_ADDRESS_H:
+						destAddressHighText.setText(value);
+						break;
+					case XBeeConstants.PARAM_DEST_ADDRESS_L:
+						destAddressLowText.setText(value);
+						break;
+					case XBeeConstants.PARAM_NODE_DISCOVERY_TIME:
+						nodeDiscoveryTimeText.setText(value);
+						break;
+					case XBeeConstants.PARAM_IO_SAMPLING_RATE:
+						ioSamplingRateTimeText.setText(value);
+						break;
+				}
 			}
 		});
 	}
-	
+
 	/**
 	 * Handles what happens when the disconnect button is pressed.
 	 */
 	private void handleDisconnectButtonPressed() {
 		xbeeTabsActivity.finish();
 	}
-	
+
 	/**
 	 * Handles what happens when the refresh button is pressed.
 	 */
@@ -531,7 +540,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		};
 		waitThread.start();
 	}
-	
+
 	/**
 	 * Handles what happens when the 'Change Other Parameter' button is pressed.
 	 */
@@ -572,7 +581,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		};
 		waitThread.start();
 	}
-	
+
 	/**
 	 * Displays a 'Reading...' progress dialog.
 	 */
@@ -586,21 +595,21 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 	private void showWriteProgressDialog() {
 		handler.sendEmptyMessage(ACTION_SHOW_WRITE_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Hides the progress dialog it is is open.
 	 */
 	private void hideProgressDialog() {
 		handler.sendEmptyMessage(ACTION_HIDE_PROGRESS_DIALOG);
 	}
-	
+
 	/**
 	 * Removes the error message.
 	 */
 	private void clearErrorMessage() {
 		handler.sendEmptyMessage(ACTION_CLEAR_ERROR_MESSAGE);
 	}
-	
+
 	/**
 	 * Sets the given error message in the activity.
 	 * 
@@ -614,7 +623,7 @@ public class XBeeDeviceInfoFragment extends AbstractXBeeDeviceFragment {
 		msg.obj = message;
 		handler.sendMessage(msg);
 	}
-	
+
 	/**
 	 * Sets the given error message in the activity.
 	 * 

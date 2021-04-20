@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -35,25 +35,25 @@ public class SendDataDialog {
 	// Constants.
 	public final static int TYPE_TEXT = 0;
 	public final static int TYPE_HEXADECIMAL = 1;
-	
+
 	private final static String HEXADECIMAL_PATTERN = "[0-9a-fA-F]+";
-	
+
 	private final static String ERROR_DATA_EMPTY = "Data cannot be empty.";
 	private final static String ERROR_INVALID_HEX_DATA = "Invalid hexadecimal data.";
-	
+
 	// Variables.
-	private Context context;
-	
+	private final Context context;
+
 	private EditText inputText;
-	
+
 	private View inputTextDialogView;
-	
+
 	private AlertDialog inputTextDialog;
-	
+
 	private String textValue;
-	
-	private int type;
-	
+
+	private final int type;
+
 	/**
 	 * Class constructor. Instantiates a new {@code SendDataDialog} object
 	 * with the given parameters.
@@ -64,7 +64,7 @@ public class SendDataDialog {
 	public SendDataDialog(Context context, int type) {
 		this.context = context;
 		this.type = type;
-		
+
 		// Setup the layout.
 		setupLayout();
 	}
@@ -116,7 +116,7 @@ public class SendDataDialog {
 			inputTextDialogView = layoutInflater.inflate(R.layout.send_data_hex_dialog, null);
 
 		// Configure the input text.
-		inputText = (EditText) inputTextDialogView.findViewById(R.id.input_text);
+		inputText = inputTextDialogView.findViewById(R.id.input_text);
 		inputText.addTextChangedListener(new TextValidator(inputText) {
 			@Override
 			public void validate(EditText textView, String text) {
@@ -137,7 +137,7 @@ public class SendDataDialog {
 			}
 		});
 	}
-	
+
 	/**
 	 * Creates the alert dialog that will be displayed.
 	 */

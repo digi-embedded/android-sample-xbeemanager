@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -27,23 +27,23 @@ import android.view.View;
 import android.widget.EditText;
 
 public class ChangeOtherParameterDialog {
-	
+
 	// Variables.
-	private Context context;
-	
+	private final Context context;
+
 	private EditText parameterText;
 	private EditText valueText;
-	
+
 	private View inputTextDialogView;
-	
+
 	private AlertDialog inputTextDialog;
-	
+
 	private String parameter;
 	private String value;
-	
+
 	public ChangeOtherParameterDialog(Context context) {
 		this.context = context;
-		
+
 		// Setup the layout.
 		setupLayout();
 	}
@@ -78,7 +78,7 @@ public class ChangeOtherParameterDialog {
 	public String getValue() {
 		return value;
 	}
-	
+
 	/**
 	 * Configures the layout of the input text dialog.
 	 */
@@ -88,10 +88,10 @@ public class ChangeOtherParameterDialog {
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 		inputTextDialogView = layoutInflater.inflate(R.layout.change_other_param_dialog, null);
 		// Configure the input texts.
-		parameterText = (EditText) inputTextDialogView.findViewById(R.id.param_text);
-		valueText = (EditText) inputTextDialogView.findViewById(R.id.value_text);
+		parameterText = inputTextDialogView.findViewById(R.id.param_text);
+		valueText = inputTextDialogView.findViewById(R.id.value_text);
 	}
-	
+
 	/**
 	 * Creates the alert dialog that will be displayed.
 	 */
