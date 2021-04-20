@@ -22,7 +22,7 @@ import android.content.Context;
 
 import com.digi.android.sample.xbeemanager.XBeeConstants;
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.android.XBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.listeners.IDataReceiveListener;
 import com.digi.xbee.api.listeners.IDiscoveryListener;

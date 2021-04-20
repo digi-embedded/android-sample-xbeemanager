@@ -19,7 +19,6 @@ android {
 }
 
 dependencies {
-    implementation files('libs/slf4j-api-1.7.7.jar')
-    implementation files('libs/XBeeJavaLibrary.jar')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.digi.xbee:xbee-android-library:1.0.0'
 }
