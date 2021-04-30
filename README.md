@@ -1,56 +1,57 @@
 XBee Manager Sample Application
 ===============================
 
-This application demonstrates the usage of the XBee Java API in Android by
-giving an example of all the available options using a local XBee device
-attached to the SBC board.
+This application demonstrates the usage of the XBee Java Library in Android by
+giving an example of all the available options using a local XBee module
+attached to a development board.
 
 Demo requirements
 -----------------
 
 To run this example you need:
 
-* One compatible device to host the application.
-* A USB connection between the device and the host PC in order to transfer and
+* A compatible development board to host the application.
+* A USB connection between the board and the host PC in order to transfer and
   launch the application.
-* An XBee device in API mode and preferably configured to join to a network.
+* An XBee in API mode and preferably configured to join to a network.
 
 Demo setup
 ----------
 
 Make sure the hardware is set up correctly:
 
-1. The device is powered on.
-2. The XBee device is attached to the SBC board using the XBee socket or using
+1. The XBee is attached to the board using the XBee socket or using
    the USB interface.
-3. The device is connected directly to the PC by the micro USB cable.
+2. The development board is powered on.
+3. The board is connected directly to the PC by the micro USB cable.
 
 Demo run
 --------
 
-The example is already configured, so all you need to do is to build and 
+The example is already configured, so all you need to do is to build and
 launch the project.
-  
-In the first page of the application you have to specify how the XBee device
-is attached to the SBC board:
-  
+
+In the first page of the application you have to specify how the XBee is
+attached to the development board:
+
 * Using the USB interface.
-* Using the Serial Port interface (XBee socket). This port is usually set on
-  `/dev/ttymxc4`.
-	  
-Specify also the connection baudrate. By default, most of XBee devices are
+* Using the Serial Port interface (XBee socket)
+  * For ConnectCore 8X SBC Pro: `/dev/ttyMCA0`
+  * For ConnectCore 8M Mini Development Kit: `/dev/ttymxc3`
+
+Specify also the connection baudrate. By default, most XBee devices are
 configured to run at 9600.
-  
+
 When you are ready click **Connect**. The application layout changes and three
 new tabs are displayed:
-  
-* **XBee Device Info**: Displays information about the attached XBee device.
+
+* **XBee Device Info**: Displays information about the attached XBee.
   You can configure some parameters from this tab.
-* **Remote XBee Devices**: Discovers XBee devices in the same network as your
-  XBee device. You can select a remote device, change some of its parameters,
-  and send data to it.
+* **Remote XBee Devices**: Discovers XBee devices in the same network as the
+  attached XBee. You can select a remote node to change some of its parameters
+  or send data to it.
 * **Received XBee Data**: Displays a table with received data from other XBee
-  devices in the network.
+  nodes in the network.
 
 Compatible with
 ---------------
@@ -58,6 +59,7 @@ Compatible with
 * ConnectCore 6 SBC
 * ConnectCore 6 SBC v3
 * ConnectCore 8X SBC Pro
+* ConnectCore 8M Mini Development Kit
 
 License
 ---------
